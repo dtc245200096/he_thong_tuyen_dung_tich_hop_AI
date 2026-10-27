@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Ký Tài Khoản Ứng Viên - AI Career Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .register-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2.5rem 1rem;
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+    }
+    .register-card {
+      max-width: 540px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) {
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .register-card {
+        padding: 1.5rem;
+      }
+    }
+    .input-addon-wrap {
+      position: relative;
+    }
+    .btn-toggle-eye {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+    }
+    .btn-toggle-eye:hover {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <div class="register-card">
+      
+      <!-- Top Navigation -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <a href="/index.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; color:var(--text-muted); font-size:0.85rem;">
+          ← Về trang chủ
+        </a>
+        <a href="/login.html?role=CANDIDATE" style="text-decoration:none; color:#818cf8; font-size:0.85rem; font-weight:600;">
+          Đã có tài khoản? Đăng nhập →
+        </a>
+      </div>
+
+      <!-- Header -->
+      <div style="text-align:center; margin-bottom:2rem;">
+        <div style="display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:14px; background:rgba(16, 185, 129, 0.15); border:1px solid rgba(16, 185, 129, 0.3); font-size:1.75rem; margin-bottom:0.75rem;">
+          🎯
+        </div>
+        <h2 style="font-size:1.75rem; font-weight:800; color:#fff; letter-spacing:-0.02em;">Tạo Tài Khoản Ứng Viên</h2>
+        <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:0.35rem;">
+          Đăng ký để nộp CV trực tuyến, nhận đánh giá AI và theo dõi lịch phỏng vấn
+        </p>
+      </div>
+
+      <!-- Registration Form -->
+      <form id="candidateRegisterForm">
+        
+        <div class="form-group">
+          <label class="form-label">Họ và tên của bạn <span style="color:#f87171;">*</span></label>
+          <input type="text" id="regFullName" class="form-control" placeholder="Ví dụ: Nguyễn Văn An" required />
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Tên đăng nhập <span style="color:#f87171;">*</span></label>
+            <input type="text" id="regUsername" class="form-control" placeholder="nguyenvanan" required autocomplete="username" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Số điện thoại</label>
+            <input type="tel" id="regPhone" class="form-control" placeholder="0912 345 678" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Địa chỉ Email <span style="color:#f87171;">*</span></label>
+          <input type="email" id="regEmail" class="form-control" placeholder="an.nguyen@example.com" required autocomplete="email" />
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Mật khẩu <span style="color:#f87171;">*</span></label>
+            <div class="input-addon-wrap">
+              <input type="password" id="regPassword" class="form-control" placeholder="Tối thiểu 6 ký tự" required autocomplete="new-password" style="padding-right:2.5rem;" />
+              <button type="button" class="btn-toggle-eye" id="togglePassword">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nhập lại mật khẩu <span style="color:#f87171;">*</span></label>
+            <div class="input-addon-wrap">
+              <input type="password" id="regConfirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" required autocomplete="new-password" style="padding-right:2.5rem;" />
+              <button type="button" class="btn-toggle-eye" id="toggleConfirmPassword">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="passwordMismatchError" style="display:none; color:#f87171; font-size:0.82rem; margin-top:-0.5rem; margin-bottom:1rem;">
+          ❌ Mật khẩu xác nhận không trùng khớp!
+        </div>
+
+        <div class="form-group" style="display:flex; align-items:flex-start; gap:0.5rem; margin-top:0.5rem;">
+          <input type="checkbox" id="regTerms" required style="margin-top:0.25rem; accent-color:var(--brand-primary);" />
+          <label for="regTerms" style="font-size:0.82rem; color:var(--text-secondary); line-height:1.4; cursor:pointer;">
+            Tôi đồng ý với các điều khoản bảo mật thông tin hồ sơ và cho phép hệ thống AI phân tích CV nhằm gợi ý công việc phù hợp.
+          </label>
+        </div>
+
+        <button type="submit" id="btnSubmitRegister" class="btn btn-primary" style="width:100%; padding:0.85rem; font-size:1rem; margin-top:1rem;">
+          🚀 Đăng Ký Tài Khoản Ứng Viên
+        </button>
+      </form>
+
+      <!-- Bottom Note -->
+      <div style="margin-top:1.75rem; padding-top:1.25rem; border-top:1px solid var(--border-subtle); text-align:center;">
+        <span style="font-size:0.85rem; color:var(--text-muted);">
+          Đăng ký với vai trò khác? 
+          <a href="/login.html?role=RECRUITER" style="color:#a5b4fc; text-decoration:none;">Tuyển dụng</a> hoặc 
+          <a href="/login.html?role=ADMIN" style="color:#a5b4fc; text-decoration:none;">Quản trị</a>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { authState, showToast } from '/js/app.js';
+
+    // Show / Hide password toggles
+    const setupEyeToggle = (btnId, inputId) => {
+      const btn = document.getElementById(btnId);
+      const input = document.getElementById(inputId);
+      if (btn && input) {
+        btn.addEventListener('click', () => {
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.innerText = '🙈';
+          } else {
+            input.type = 'password';
+            btn.innerText = '👁️';
+          }
+        });
+      }
+    };
+    setupEyeToggle('togglePassword', 'regPassword');
+    setupEyeToggle('toggleConfirmPassword', 'regConfirmPassword');
+
+    // Handle Form Submit
+    document.getElementById('candidateRegisterForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fullName = document.getElementById('regFullName').value.trim();
+      const username = document.getElementById('regUsername').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const confirmPassword = document.getElementById('regConfirmPassword').value;
+      const errorDiv = document.getElementById('passwordMismatchError');
+      const submitBtn = document.getElementById('btnSubmitRegister');
+
+      // Kiểm tra mật khẩu khớp
+      if (password !== confirmPassword) {
+        errorDiv.style.display = 'block';
+        showToast('Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.', 'error');
+        return;
+      }
+      errorDiv.style.display = 'none';
+
+      if (password.length < 6) {
+        showToast('Mật khẩu phải có độ dài từ 6 ký tự trở lên.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = '⏳ Đang đăng ký tài khoản...';
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ten_dang_nhap: username,
+            mat_khau: password,
+            email: email,
+            ho_ten: fullName,
+            so_dien_thoai: phone
+          })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          showToast(`Chúc mừng ${fullName}! Đăng ký thành công. Đang đăng nhập...`, 'success');
+          
+          // Ghi nhớ tên tài khoản và lưu phiên đăng nhập của ứng viên
+          localStorage.setItem('tuyendung_last_username', username);
+          authState.setToken(data.token);
+          authState.setUser(data.user);
+
+          setTimeout(() => {
+            window.location.href = '/candidate.html';
+          }, 800);
+        } else {
+          showToast(data.message || 'Đăng ký thất bại.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.innerText = '🚀 Đăng Ký Tài Khoản Ứng Viên';
+        }
+      } catch (err) {
+        showToast(`Lỗi kết nối máy chủ: ${err.message}`, 'error');
+        submitBtn.disabled = false;
+        submitBtn.innerText = '🚀 Đăng Ký Tài Khoản Ứng Viên';
+      }
+    });
+  </script>
+</body>
+</html>

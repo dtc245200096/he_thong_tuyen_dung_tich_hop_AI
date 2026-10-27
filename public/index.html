@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ Thống Quản Lý Tuyển Dụng AI (Smart Recruitment System)</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; padding:2rem 1rem;">
+  <div style="max-width:960px; width:100%; text-align:center;">
+    <!-- Hero Header -->
+    <div style="display:inline-flex; align-items:center; gap:0.5rem; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.3); padding:0.35rem 0.85rem; border-radius:9999px; margin-bottom:1.5rem; font-size:0.85rem; color:#a5b4fc; font-weight:600;">
+      <span>⚡ AI-Powered Recruitment Management Platform</span>
+      <span style="background:#10b981; width:8px; height:8px; border-radius:50%; display:inline-block;"></span>
+      <span>Phân Quyền Nghiêm Ngặt & Đăng Nhập Riêng Biệt</span>
+    </div>
+
+    <h1 style="font-size:2.75rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:1rem; background: linear-gradient(135deg, #fff 30%, #a5b4fc 70%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Cổng Điều Hướng Tuyển Dụng AI
+    </h1>
+
+    <p style="font-size:1.05rem; color:var(--text-secondary); max-width:750px; margin:0 auto 2.5rem; line-height:1.6;">
+      Nền tảng quản lý tuyển dụng thông minh tích hợp trí tuệ nhân tạo. Vui lòng chọn cổng truy cập phù hợp với vai trò của bạn để đăng nhập và làm việc.
+    </p>
+
+    <!-- 3 Role Portals Grid: Each leads to dedicated Login Page -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.5rem; text-align:left;">
+      <!-- Card 1: Admin -->
+      <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; border-top:3px solid #6366f1;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div style="font-size:1.75rem;">⚡</div>
+            <span class="badge badge-moi">Quản Trị</span>
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:#fff;">Quản Trị Viên / Quản Lý</h3>
+          <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1.25rem;">
+            Quản lý chiến lược: Xem KPI tuyển dụng, giám sát phễu chuyển đổi, ngân sách Khoản Chi và trợ lý hỏi đáp dữ liệu tự nhiên Safe Text-to-SQL (F12).
+          </p>
+        </div>
+        <a href="/login.html?role=ADMIN" class="btn btn-primary" style="width:100%;">
+          Đăng Nhập Quản Trị Viên →
+        </a>
+      </div>
+
+      <!-- Card 2: Recruiter -->
+      <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; border-top:3px solid #a855f7;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div style="font-size:1.75rem;">👥</div>
+            <span class="badge badge-pv">Tuyển Dụng</span>
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:#fff;">Chuyên Viên Tuyển Dụng</h3>
+          <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1.25rem;">
+            Thao tác nghiệp vụ: Quản lý tin phụ trách (Recruiter Scope), công cụ AI Đối Sánh CV, gợi ý câu hỏi phỏng vấn, lên lịch và duyệt hồ sơ tuần tự.
+          </p>
+        </div>
+        <a href="/login.html?role=RECRUITER" class="btn btn-ai" style="width:100%;">
+          Đăng Nhập Tuyển Dụng →
+        </a>
+      </div>
+
+      <!-- Card 3: Candidate -->
+      <div class="card" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:space-between; border-top:3px solid #10b981;">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <div style="font-size:1.75rem;">🎯</div>
+            <span class="badge badge-dat">Ứng Viên</span>
+          </div>
+          <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:#fff;">Cổng Thông Tin Ứng Viên</h3>
+          <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:1.25rem;">
+            Dành cho ứng viên: Xem tin tuyển dụng, upload CV kéo thả (&le; 10 MiB, PDF/DOCX), cơ chế chống nộp trùng, theo dõi tiến trình và lịch hẹn.
+          </p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+          <a href="/login.html?role=CANDIDATE" class="btn btn-success" style="width:100%;">
+            Đăng Nhập Cổng Ứng Viên →
+          </a>
+          <a href="/register.html" class="btn btn-secondary btn-sm" style="width:100%; font-size:0.82rem; text-align:center;">
+            📝 Chưa có tài khoản? Đăng ký ngay
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

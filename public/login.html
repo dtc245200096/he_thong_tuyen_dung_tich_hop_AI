@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Nhập Hệ Thống Tuyển Dụng AI</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="display:flex; justify-content:center; align-items:center; min-height:100vh; padding:1.5rem;">
+  <div class="card" style="max-width:460px; width:100%; padding:2.25rem; border:1px solid var(--border-glass); box-shadow:var(--shadow-lg);">
+    
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:1.75rem;">
+      <a href="/index.html" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">
+        ← Quay lại trang điều hướng
+      </a>
+      <div id="roleBadgeContainer" style="margin-bottom:0.75rem;">
+        <span class="badge badge-moi" id="roleBadge">QUẢN TRỊ VIÊN (ADMIN)</span>
+      </div>
+      <h2 id="loginTitle" style="font-size:1.6rem; font-weight:800; color:#fff; letter-spacing:-0.02em;">Đăng Nhập Hệ Thống</h2>
+      <p id="loginSubtitle" style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.35rem;">
+        Nhập thông tin xác thực để truy cập bảng điều khiển
+      </p>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Tên đăng nhập hoặc Email</label>
+        <input type="text" id="usernameInput" class="form-control" placeholder="Nhập tên đăng nhập hoặc email..." required autocomplete="username" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mật khẩu</label>
+        <input type="password" id="passwordInput" class="form-control" placeholder="Nhập mật khẩu..." required autocomplete="current-password" />
+      </div>
+
+      <button type="submit" id="btnSubmitLogin" class="btn btn-primary" style="width:100%; padding:0.75rem; font-size:0.95rem; margin-top:0.5rem;">
+        Đăng Nhập
+      </button>
+    </form>
+
+    <!-- Register Form for Candidates -->
+    <div id="candidateRegisterSection" style="display:none; margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--border-subtle); text-align:center;">
+      <span style="font-size:0.85rem; color:var(--text-secondary);">Chưa có tài khoản ứng viên?</span>
+      <a href="/register.html" class="btn btn-secondary btn-sm" style="margin-left:0.5rem; text-decoration:none;">
+        Đăng Ký Tài Khoản Mới →
+      </a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { authState, showToast } from '/js/app.js';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetRole = (urlParams.get('role') || 'ADMIN').toUpperCase();
+
+    const roleBadge = document.getElementById('roleBadge');
+    const loginTitle = document.getElementById('loginTitle');
+    const usernameInput = document.getElementById('usernameInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const candidateSection = document.getElementById('candidateRegisterSection');
+
+    let targetPage = '/admin.html';
+
+    if (targetRole === 'RECRUITER') {
+      roleBadge.className = 'badge badge-pv';
+      roleBadge.innerText = 'NHÂN VIÊN TUYỂN DỤNG (RECRUITER)';
+      loginTitle.innerText = 'Đăng Nhập Tuyển Dụng';
+      targetPage = '/recruiter.html';
+    } else if (targetRole === 'CANDIDATE') {
+      roleBadge.className = 'badge badge-dat';
+      roleBadge.innerText = 'CỔNG ỨNG VIÊN (CANDIDATE)';
+      loginTitle.innerText = 'Đăng Nhập Ứng Viên';
+      targetPage = '/candidate.html';
+      candidateSection.style.display = 'block';
+    } else {
+      roleBadge.className = 'badge badge-moi';
+      roleBadge.innerText = 'QUẢN TRỊ VIÊN (ADMIN)';
+      loginTitle.innerText = 'Đăng Nhập Quản Trị';
+      targetPage = '/admin.html';
+    }
+
+    // Tự động điền tài khoản đã ghi nhớ (nếu có)
+    const rememberedUsername = localStorage.getItem('tuyendung_last_username');
+    if (rememberedUsername) {
+      usernameInput.value = rememberedUsername;
+    }
+
+    // Xử lý submit đăng nhập
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ten_dang_nhap: username, mat_khau: password })
+        });
+
+        const data = await res.json();
+        if (!data.success) {
+          showToast(data.message || 'Đăng nhập thất bại.', 'error');
+          return;
+        }
+
+        const user = data.user;
+
+        // Lưu thông tin phiên đăng nhập & ghi nhớ tài khoản
+        authState.setToken(data.token);
+        authState.setUser(user);
+        localStorage.setItem('tuyendung_last_username', user.ten_dang_nhap);
+
+        // Điều hướng chính xác theo vai trò thực tế của tài khoản
+        let destination = targetPage;
+        if (user.vai_tro === 'ADMIN') {
+          destination = '/admin.html';
+        } else if (user.vai_tro === 'RECRUITER') {
+          destination = '/recruiter.html';
+        } else if (user.vai_tro === 'CANDIDATE') {
+          destination = '/candidate.html';
+        }
+
+        if (destination !== targetPage) {
+          showToast(`Đăng nhập thành công! Bạn đang đăng nhập vai trò ${user.vai_tro}. Đang chuyển hướng...`, 'info');
+        } else {
+          showToast(`Đăng nhập thành công! Chào mừng ${user.ho_ten}.`, 'success');
+        }
+
+        setTimeout(() => {
+          window.location.href = destination;
+        }, 500);
+
+      } catch (err) {
+        showToast(`Lỗi kết nối máy chủ: ${err.message}`, 'error');
+      }
+    });
+
+  </script>
+</body>
+</html>

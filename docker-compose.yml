@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # 1. Cơ sở dữ liệu MySQL 8.0 chuẩn UTF-8mb4
+  db:
+    image: mysql:8.0
+    container_name: tuyendung_ai_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tuyendung_ai
+      MYSQL_USER: tuyendung_user
+      MYSQL_PASSWORD: tuyendung_pass
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --max_allowed_packet=64M
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - tuyendung_network
+
+  # 2. Ứng dụng Backend API & Web Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tuyendung_ai_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=tuyendung_user
+      - DB_PASS=tuyendung_pass
+      - DB_NAME=tuyendung_ai
+      - JWT_SECRET=super_secret_jwt_key_recruitment_ai_2026_secure
+      - JWT_EXPIRES_IN=7d
+      - UPLOAD_DIR=./uploads
+      - MAX_FILE_SIZE_BYTES=10485760
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tuyendung_network
+
+  # 3. Giao diện trực quan Quản trị Cơ sở dữ liệu PhpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: tuyendung_ai_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=rootpassword
+      - UPLOAD_LIMIT=64M
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tuyendung_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  tuyendung_network:
+    driver: bridge

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Quản Trị Tuyển Dụng - AI Executive Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h2>Tuyển Dụng AI</h2>
+          <span>Quản Trị / Executive</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li><a class="nav-link active" data-tab="overview"><span class="icon">📊</span> Tổng quan KPI</a></li>
+        <li><a class="nav-link" data-tab="departments"><span class="icon">🏢</span> Phòng Ban & Vị Trí</a></li>
+        <li><a class="nav-link" data-tab="expenses"><span class="icon">💰</span> Quản Lý Khoản Chi</a></li>
+        <li><a class="nav-link" data-tab="accounts"><span class="icon">👥</span> Quản Lý Tài Khoản</a></li>
+        <li><a class="nav-link" data-tab="text-to-sql"><span class="icon">🤖</span> Hỏi Đáp Text-to-SQL (F12)</a></li>
+        <li>
+          <a class="nav-link" href="/recruiter.html" style="color:#a5b4fc; border:1px dashed rgba(165,180,252,0.3); border-radius:8px; margin-top:0.5rem;">
+            <span class="icon">💼</span> Nghiệp Vụ Tuyển Dụng
+          </a>
+        </li>
+        <li style="margin-top:auto; padding-top:1rem; border-top:1px solid var(--border-subtle);">
+          <a class="nav-link" id="btnSidebarLogout" style="color:#f87171;"><span class="icon">🚪</span> Đăng Xuất</a>
+        </li>
+      </ul>
+
+      <div class="user-badge">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150" alt="Avatar" class="user-avatar">
+        <div class="user-info">
+          <div class="user-name" id="currentUserName">Nguyễn Quản Trị</div>
+          <div class="user-role">Quản Trị Viên (Toàn Quyền)</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <h1 class="page-title">Bảng Điều Khiển Quản Trị Tuyển Dụng</h1>
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <a href="/recruiter.html" class="btn btn-primary btn-sm" style="font-size:0.82rem;">
+            💼 Không Gian Tuyển Dụng →
+          </a>
+          <span class="badge badge-moi">QUYỀN HẠN: ADMIN</span>
+          <button class="btn btn-secondary btn-sm" id="btnTopbarLogout" style="color:#f87171;">
+            🚪 Đăng Xuất
+          </button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <!-- TAB 1: OVERVIEW -->
+        <section id="tab-overview" class="tab-content">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Vị Trí Tuyển Dụng</span>
+                <span class="kpi-icon">💼</span>
+              </div>
+              <div class="kpi-value" id="kpiPositions">--</div>
+              <div class="kpi-subtitle">Đang mở (MO) & Đã lấp đầy (DA_LAP_DAY)</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Tổng Đơn Ứng Tuyển</span>
+                <span class="kpi-icon">📥</span>
+              </div>
+              <div class="kpi-value" id="kpiApplications">--</div>
+              <div class="kpi-subtitle">Chống nộp trùng nghiêm ngặt</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Tỷ Lệ Tuyển Thành Công</span>
+                <span class="kpi-icon">🎯</span>
+              </div>
+              <div class="kpi-value" id="kpiConversionRate">--%</div>
+              <div class="kpi-subtitle">Chuyển đổi qua phễu tuyển dụng</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Tổng Chi Phí (Khoản Chi)</span>
+                <span class="kpi-icon">💳</span>
+              </div>
+              <div class="kpi-value" id="kpiTotalExpense">--</div>
+              <div class="kpi-subtitle">Ngân sách các kênh tuyển dụng</div>
+            </div>
+          </div>
+
+          <!-- Recruitment Funnel -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📈 Phễu Tuyển Dụng Tuần Tự (Recruitment Pipeline Funnel)</h3>
+              <button class="btn btn-ai btn-sm" id="btnRunAiReport">✨ Sinh Báo Cáo AI (BAO_CAO)</button>
+            </div>
+            <div class="pipeline-timeline">
+              <div class="pipeline-step completed">
+                <span>1</span> Mới Tiếp Nhận (MOI): <strong id="funnelMoi">--</strong>
+              </div>
+              <div class="pipeline-step active">
+                <span>2</span> Đang Phỏng Vấn (DANG_PHONG_VAN): <strong id="funnelPv">--</strong>
+              </div>
+              <div class="pipeline-step completed">
+                <span>3</span> Trúng Tuyển (DAT): <strong id="funnelDat">--</strong>
+              </div>
+            </div>
+            <div id="aiReportOutput" style="display:none; margin-top:1.5rem; padding:1.25rem; background:rgba(99,102,241,0.06); border:1px solid rgba(99,102,241,0.3); border-radius:12px;"></div>
+          </div>
+        </section>
+
+        <!-- TAB 2: DEPARTMENTS & POSITIONS -->
+        <section id="tab-departments" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🏢 Quản Lý Vị Trí Tuyển Dụng (ViTriTuyenDung)</h3>
+              <button class="btn btn-primary btn-sm" id="btnOpenAddPositionModal">+ Thêm Vị Trí Mới</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="positionsTable">
+                <thead>
+                  <tr>
+                    <th>Mã Vị Trí</th>
+                    <th>Tên Vị Trí</th>
+                    <th>Phòng Ban</th>
+                    <th>Chỉ Tiêu</th>
+                    <th>Mức Lương</th>
+                    <th>Trạng Thái</th>
+                    <th>Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="positionsTableBody">
+                  <tr><td colspan="7" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: EXPENSES (KHOẢN CHI) -->
+        <section id="tab-expenses" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">💰 Quản Lý Khoản Chi Tuyển Dụng (KhoanChi)</h3>
+              <button class="btn btn-primary btn-sm" id="btnOpenAddExpenseModal">+ Thêm Khoản Chi</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tên Khoản Chi</th>
+                    <th>Số Tiền (VNĐ)</th>
+                    <th>Ngày Chi</th>
+                    <th>Kênh / Tin</th>
+                    <th>Người Phê Duyệt</th>
+                    <th>Ghi Chú</th>
+                    <th style="text-align:right;">Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="expensesTableBody">
+                  <tr><td colspan="7" style="text-align:center;">Đang tải dữ liệu...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: SAFE TEXT-TO-SQL (F12) -->
+        <section id="tab-text-to-sql" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🤖 Trợ Lý Hỏi Đáp Dữ Liệu Tự Nhiên (Safe Text-to-SQL - F12)</h3>
+              <span class="badge badge-dat">🛡️ READ-ONLY & ANTI-INJECTION PROTECTED</span>
+            </div>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">
+              Đặt câu hỏi bằng ngôn ngữ tự nhiên về dữ liệu tuyển dụng, chi phí, hoặc tỷ lệ vượt qua phỏng vấn. Hệ thống tự động chuyển đổi thành câu truy vấn SQL an toàn, truy xuất số liệu thực tế từ cơ sở dữ liệu và giải thích minh bạch.
+            </p>
+
+            <div class="chat-container">
+              <div class="chat-messages" id="chatMessages">
+                <div class="chat-message ai">
+                  Xin chào Quản lý! Bạn có thể hỏi tôi bất kỳ câu hỏi nào về số liệu tuyển dụng, ví dụ:
+                  <ul style="margin: 0.5rem 0 0 1.25rem; font-size:0.85rem; color:#a5b4fc;">
+                    <li><em>"Tỷ lệ ứng viên vượt qua vòng phỏng vấn tuần này?"</em></li>
+                    <li><em>"Tổng chi phí tuyển dụng đã ghi nhận là bao nhiêu?"</em></li>
+                    <li><em>"Số lượng đơn ứng tuyển theo từng trạng thái?"</em></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="chat-input-bar">
+                <input type="text" id="chatInput" class="form-control" placeholder="Nhập câu hỏi bằng ngôn ngữ tự nhiên..." />
+                <button class="btn btn-ai" id="btnSendChat">Gửi Câu Hỏi</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: ACCOUNTS MANAGEMENT -->
+        <section id="tab-accounts" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header" style="flex-wrap:wrap; gap:1rem;">
+              <div>
+                <h3 class="card-title">👥 Quản Lý Tài Khoản & Phân Quyền Hệ Thống</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
+                  Tạo tài khoản, cung cấp/thu hồi quyền hạn (ADMIN, RECRUITER, CANDIDATE) và khóa/mở khóa tài khoản.
+                </p>
+              </div>
+              <button class="btn btn-primary" onclick="openCreateAccountModal()">
+                ➕ Tạo Tài Khoản Mới
+              </button>
+            </div>
+
+            <!-- Filter and Search Bar -->
+            <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-bottom:1.25rem; background:rgba(255,255,255,0.02); padding:1rem; border-radius:10px; border:1px solid var(--border-subtle);">
+              <div style="flex:1; min-width:220px;">
+                <input type="text" id="accSearchInput" class="form-control" placeholder="🔍 Tìm theo họ tên, tên đăng nhập, email..." />
+              </div>
+              <div style="width:180px;">
+                <select id="accRoleFilter" class="form-control">
+                  <option value="">Tất cả vai trò</option>
+                  <option value="ADMIN">Quản Trị Viên (ADMIN)</option>
+                  <option value="RECRUITER">Tuyển Dụng (RECRUITER)</option>
+                  <option value="CANDIDATE">Ứng Viên (CANDIDATE)</option>
+                </select>
+              </div>
+              <div style="width:160px;">
+                <select id="accStatusFilter" class="form-control">
+                  <option value="">Tất cả trạng thái</option>
+                  <option value="HOAT_DONG">Hoạt động</option>
+                  <option value="KHOA">Đã bị khóa</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Accounts Table -->
+            <div class="table-responsive">
+              <table class="data-table" id="accountsTable">
+                <thead>
+                  <tr>
+                    <th>Người Dùng</th>
+                    <th>Tên Đăng Nhập</th>
+                    <th>Email & SĐT</th>
+                    <th>Vai Trò & Quyền</th>
+                    <th>Phòng Ban</th>
+                    <th>Trạng Thái</th>
+                    <th style="text-align:right;">Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="accountsTableBody">
+                  <tr><td colspan="7" style="text-align:center;">Đang tải danh sách tài khoản...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Thêm Vị Trí -->
+  <div class="modal-overlay" id="addPositionModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Thêm Vị Trí Tuyển Dụng Mới</h3>
+        <button class="modal-close" onclick="closeModal('addPositionModal')">&times;</button>
+      </div>
+      <form id="addPositionForm">
+        <div class="form-group">
+          <label class="form-label">Phòng Ban</label>
+          <select id="posDeptSelect" class="form-control" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mã Vị Trí</label>
+          <input type="text" id="posCode" class="form-control" placeholder="VD: VT_DEVOPS" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tên Vị Trí</label>
+          <input type="text" id="posTitle" class="form-control" placeholder="VD: Cloud DevOps Engineer" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Yêu Cầu Tuyển Dụng (Để AI Đối Sánh)</label>
+          <textarea id="posReq" class="form-control" rows="3" placeholder="Yêu cầu kỹ năng, năm kinh nghiệm..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trạng Thái Ban Đầu</label>
+          <select id="posStatus" class="form-control">
+            <option value="MO">Mở (MO)</option>
+            <option value="DONG">Đóng (DONG)</option>
+            <option value="DA_LAP_DAY">Đã lấp đầy (DA_LAP_DAY)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Lưu Vị Trí Tuyển Dụng</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Tạo Tài Khoản Mới -->
+  <div class="modal-overlay" id="createAccountModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">➕ Tạo Tài Khoản Người Dùng Mới</h3>
+        <button class="modal-close" onclick="closeModal('createAccountModal')">&times;</button>
+      </div>
+      <form id="createAccountForm">
+        <div class="form-group">
+          <label class="form-label">Họ và Tên <span style="color:#f87171;">*</span></label>
+          <input type="text" id="newAccFullName" class="form-control" placeholder="Ví dụ: Hoàng Minh Tuấn" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tên Đăng Nhập <span style="color:#f87171;">*</span></label>
+          <input type="text" id="newAccUsername" class="form-control" placeholder="Ví dụ: tuan_recruiter" required />
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Email <span style="color:#f87171;">*</span></label>
+            <input type="email" id="newAccEmail" class="form-control" placeholder="tuan@company.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Số Điện Thoại</label>
+            <input type="tel" id="newAccPhone" class="form-control" placeholder="0987 654 321" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mật Khẩu Khởi Tạo <span style="color:#f87171;">*</span></label>
+          <input type="password" id="newAccPassword" class="form-control" value="MatKhau@123" required />
+          <small style="color:var(--text-muted); font-size:0.75rem;">Mặc định: MatKhau@123 (người dùng có thể đổi sau)</small>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Cấp Quyền / Vai Trò <span style="color:#f87171;">*</span></label>
+            <select id="newAccRole" class="form-control" required>
+              <option value="RECRUITER">Chuyên Viên Tuyển Dụng (RECRUITER)</option>
+              <option value="ADMIN">Quản Trị Viên (ADMIN)</option>
+              <option value="CANDIDATE">Ứng Viên (CANDIDATE)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phòng Ban Phụ Trách</label>
+            <select id="newAccDept" class="form-control">
+              <option value="">-- Không phân bổ --</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          Tạo Tài Khoản & Cấp Quyền
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Cung Cấp / Đổi Quyền Hạn (Phân Quyền) -->
+  <div class="modal-overlay" id="changeRoleModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⚡ Phân Quyền & Cấp Quyền Người Dùng</h3>
+        <button class="modal-close" onclick="closeModal('changeRoleModal')">&times;</button>
+      </div>
+      <form id="changeRoleForm">
+        <input type="hidden" id="changeRoleUserId" />
+        <div style="margin-bottom:1rem; background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); padding:1rem; border-radius:8px;">
+          <div style="font-weight:700; color:#fff; font-size:1.05rem;" id="changeRoleUserName">Tên Người Dùng</div>
+          <div style="font-size:0.85rem; color:var(--text-muted); margin-top:0.2rem;" id="changeRoleUserMeta">user@email.com | vai_tro_cu</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Chọn Vai Trò / Quyền Hạn Mới Cho Tài Khoản</label>
+          <select id="changeRoleSelect" class="form-control" required>
+            <option value="ADMIN">Quản Trị Viên (ADMIN) - Toàn quyền hệ thống & tuyển dụng</option>
+            <option value="RECRUITER">Chuyên Viên Tuyển Dụng (RECRUITER) - Quản lý CV, phỏng vấn, tin</option>
+            <option value="CANDIDATE">Ứng Viên (CANDIDATE) - Cổng tìm việc và nộp hồ sơ</option>
+          </select>
+        </div>
+        <p style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+          ℹ️ <strong>Lưu ý:</strong> Thay đổi quyền hạn sẽ có hiệu lực ngay lập tức trong phiên làm việc tiếp theo của người dùng.
+        </p>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          Xác Nhận Thay Đổi Quyền
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Thêm Khoản Chi Tuyển Dụng (F10) -->
+  <div class="modal-overlay" id="addExpenseModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">💰 Thêm Khoản Chi Tuyển Dụng Mới</h3>
+        <button class="modal-close" onclick="closeModal('addExpenseModal')">&times;</button>
+      </div>
+      <form id="addExpenseForm">
+        <div class="form-group">
+          <label class="form-label">Tên Khoản Chi <span style="color:#f87171;">*</span></label>
+          <input type="text" id="expTitle" class="form-control" placeholder="Ví dụ: Đẩy tin tuyển dụng LinkedIn Premium" required />
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Số Tiền (VNĐ) <span style="color:#f87171;">*</span></label>
+            <input type="number" id="expAmount" min="1000" step="1000" class="form-control" placeholder="Ví dụ: 3500000" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ngày Chi <span style="color:#f87171;">*</span></label>
+            <input type="date" id="expDate" class="form-control" required />
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Gắn Với Tin Tuyển Dụng</label>
+            <select id="expPostingSelect" class="form-control">
+              <option value="">-- Không gắn tin cụ thể --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kênh / Nguồn Tuyển Dụng</label>
+            <select id="expSourceSelect" class="form-control">
+              <option value="">-- Không phân loại kênh --</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Đường Dẫn Hóa Đơn / Chứng Từ</label>
+          <input type="text" id="expInvoiceUrl" class="form-control" placeholder="Ví dụ: /uploads/invoices/inv-003.pdf" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ghi Chú Chi Tiết</label>
+          <textarea id="expNotes" class="form-control" rows="2" placeholder="Ví dụ: Thanh toán qua thẻ Visa công ty, hóa đơn VAT điện tử..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          Lưu Khoản Chi Tuyển Dụng
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/js/admin-dashboard.js"></script>
+</body>
+</html>

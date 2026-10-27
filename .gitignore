@@ -1,0 +1,82 @@
+# ==========================================
+# 1. Dependencies & Package Managers
+# ==========================================
+node_modules/
+package-lock.json.backup
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# 2. Environment Variables & Secrets (CRITICAL)
+# ==========================================
+# Tuyệt đối không commit file chứa credentials, DB password, JWT secret, GEMINI_API_KEY
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.cert
+credentials.json
+service-account*.json
+
+# ==========================================
+# 3. Runtime & Uploaded Files (Data privacy & storage)
+# ==========================================
+# Bỏ qua các file CV, tài liệu do người dùng/ứng viên upload trong runtime
+uploads/*
+!uploads/.gitkeep
+!uploads/cvs/
+uploads/cvs/*
+!uploads/cvs/.gitkeep
+
+# Logs
+logs/
+*.log
+
+# ==========================================
+# 4. OS & System Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# ==========================================
+# 5. IDE & Editor Artifacts
+# ==========================================
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# 6. Test & Coverage Artifacts
+# ==========================================
+coverage/
+.nyc_output/
+
+# ==========================================
+# 7. AI/Python & Cache (Phòng trường hợp mở rộng AI script bằng Python)
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/

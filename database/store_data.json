@@ -1,0 +1,857 @@
+{
+  "TaiKhoan": [
+    {
+      "id": "a0000000-0000-0000-0000-000000000001",
+      "ten_dang_nhap": "admin",
+      "mat_khau_hash": "$2a$10$X87oD0Q/j0FekYdZpS4rX.2zUvN4xUqPZ5Xm0P2.Z/3g9wF3gq3qy",
+      "email": "admin@tuyendungai.vn",
+      "ho_ten": "Nguyễn Quản Trị",
+      "vai_tro": "ADMIN",
+      "trang_thai": "HOAT_DONG",
+      "phong_ban_id": "e1000000-0000-0000-0000-000000000002",
+      "deleted_at": null
+    },
+    {
+      "id": "a0000000-0000-0000-0000-000000000002",
+      "ten_dang_nhap": "recruiter_linh",
+      "mat_khau_hash": "$2a$10$X87oD0Q/j0FekYdZpS4rX.2zUvN4xUqPZ5Xm0P2.Z/3g9wF3gq3qy",
+      "email": "recruiter@tuyendungai.vn",
+      "ho_ten": "Trần Thảo Linh",
+      "vai_tro": "RECRUITER",
+      "trang_thai": "HOAT_DONG",
+      "phong_ban_id": "e1000000-0000-0000-0000-000000000002",
+      "deleted_at": null
+    },
+    {
+      "id": "a0000000-0000-0000-0000-000000000004",
+      "ten_dang_nhap": "candidate_an",
+      "mat_khau_hash": "$2a$10$X87oD0Q/j0FekYdZpS4rX.2zUvN4xUqPZ5Xm0P2.Z/3g9wF3gq3qy",
+      "email": "ungvien.an@gmail.com",
+      "ho_ten": "Phạm Quốc An",
+      "vai_tro": "CANDIDATE",
+      "trang_thai": "HOAT_DONG",
+      "phong_ban_id": null,
+      "deleted_at": null
+    },
+    {
+      "id": "b9e290dc-aba1-47e5-b855-6028c08b768a",
+      "ten_dang_nhap": "nguyenvana",
+      "mat_khau_hash": "$2a$10$fjb/dOulcw3BI4D9pQ/VbOV7A25njLrjzKWvxoKZkRb6wwDsx5r0i",
+      "email": "nguyenvana@gmail.com",
+      "so_dien_thoai": "",
+      "ho_ten": "Nguyễn Văn A",
+      "vai_tro": "CANDIDATE",
+      "trang_thai": "HOAT_DONG",
+      "phong_ban_id": null,
+      "avatar_url": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+      "created_at": "2026-10-01T14:39:10.540Z",
+      "updated_at": "2026-10-01T14:39:10.540Z",
+      "deleted_at": null
+    },
+    {
+      "id": "4bee7753-a676-45e5-9459-fa9ef12c6bee",
+      "ten_dang_nhap": "dtc245200096@ictu.edu.vn",
+      "mat_khau_hash": "$2a$10$SfacmCY46hDzK0JMuUiqku8r22qSejX.DIWLRRSb5.owILgrIpuY6",
+      "email": "dtc245200096@ictu.edu.vn",
+      "so_dien_thoai": "0985453556",
+      "ho_ten": "Minh Hoàng",
+      "vai_tro": "CANDIDATE",
+      "trang_thai": "HOAT_DONG",
+      "phong_ban_id": null,
+      "avatar_url": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150",
+      "created_at": "2026-10-01T14:41:01.894Z",
+      "updated_at": "2026-10-01T14:41:01.894Z",
+      "deleted_at": null
+    }
+  ],
+  "PhongBan": [
+    {
+      "id": "e1000000-0000-0000-0000-000000000001",
+      "ma_phong_ban": "PB_IT",
+      "ten_phong_ban": "Phòng Công nghệ Thông tin",
+      "mo_ta": "Phát triển phần mềm AI & Cloud.",
+      "nguoi_quan_ly_id": "a0000000-0000-0000-0000-000000000002",
+      "deleted_at": null
+    },
+    {
+      "id": "e1000000-0000-0000-0000-000000000002",
+      "ma_phong_ban": "PB_HR",
+      "ten_phong_ban": "Phòng Nhân sự & Tuyển dụng",
+      "mo_ta": "Quản trị nhân sự và tuyển dụng toàn diện.",
+      "nguoi_quan_ly_id": "a0000000-0000-0000-0000-000000000001",
+      "deleted_at": null
+    }
+  ],
+  "ViTriTuyenDung": [
+    {
+      "id": "b1000000-0000-0000-0000-000000000001",
+      "phong_ban_id": "e1000000-0000-0000-0000-000000000001",
+      "ma_vi_tri": "VT_SE_SR",
+      "ten_vi_tri": "Senior Backend Engineer (Node.js/Python)",
+      "mo_ta": "Thiết kế RESTful API và kiến trúc AI cho hệ thống tuyển dụng.",
+      "yeu_cau": "Yêu cầu: Tối thiểu 3+ năm kinh nghiệm Node.js, Express, Python. Thành thạo cơ sở dữ liệu MySQL, Redis, tối ưu hóa truy vấn. Có hiểu biết về Docker, CI/CD và tích hợp OpenAI/Gemini API.",
+      "muc_luong_min": 25000000,
+      "muc_luong_max": 45000000,
+      "so_luong_can_tuyen": 2,
+      "so_luong_da_tuyen": 0,
+      "trang_thai": "MO",
+      "deleted_at": null
+    },
+    {
+      "id": "b1000000-0000-0000-0000-000000000002",
+      "phong_ban_id": "e1000000-0000-0000-0000-000000000001",
+      "ma_vi_tri": "VT_AI_ENG",
+      "ten_vi_tri": "AI / RAG Engineer",
+      "mo_ta": "Nghiên cứu ứng dụng LLM, RAG và Safe Text-to-SQL.",
+      "yeu_cau": "Yêu cầu: Thành thạo Python, LangChain, Vector DB, Text-to-SQL, Prompt Engineering.",
+      "muc_luong_min": 30000000,
+      "muc_luong_max": 55000000,
+      "so_luong_can_tuyen": 1,
+      "so_luong_da_tuyen": 0,
+      "trang_thai": "MO",
+      "deleted_at": null
+    },
+    {
+      "id": "e92b27b8-5d86-472a-9781-4f188b5959dd",
+      "phong_ban_id": "e1000000-0000-0000-0000-000000000001",
+      "ma_vi_tri": "VT_8GQS1",
+      "ten_vi_tri": "testter",
+      "yeu_cau": "công việc chuyên môn cao, lương 5-10 triệu vnd theo năng lực,thử việc ko lương",
+      "muc_luong_min": 15000000,
+      "muc_luong_max": 35000000,
+      "so_luong_can_tuyen": 1,
+      "so_luong_da_tuyen": 0,
+      "trang_thai": "MO",
+      "created_at": "2026-10-01T14:44:03.996Z",
+      "updated_at": "2026-10-01T14:44:03.996Z",
+      "deleted_at": null
+    },
+    {
+      "id": "113ad24b-d7a8-44b0-9561-7e424fb4234b",
+      "phong_ban_id": "e1000000-0000-0000-0000-000000000001",
+      "ma_vi_tri": "VT_XCLQC",
+      "ten_vi_tri": "Frontend Developer",
+      "yeu_cau": "công việc đáp ứng yêu cầu kỹ thuật,mức lương khởi điểm cao,trả lương theo năng lực cá nhân",
+      "muc_luong_min": 15000000,
+      "muc_luong_max": 35000000,
+      "so_luong_can_tuyen": 1,
+      "so_luong_da_tuyen": 0,
+      "trang_thai": "MO",
+      "created_at": "2026-10-04T00:25:55.251Z",
+      "updated_at": "2026-10-04T00:25:55.251Z",
+      "deleted_at": null
+    }
+  ],
+  "TinTuyenDung": [
+    {
+      "id": "c1000000-0000-0000-0000-000000000001",
+      "vi_tri_id": "b1000000-0000-0000-0000-000000000001",
+      "tieu_de": "Tuyển Gấp Senior Backend Engineer (Node.js/Python) - Thu Nhập Đến 45 Triệu",
+      "noi_dung": "Tham gia xây dựng sản phẩm AI thế hệ mới...",
+      "dia_diem": "Hà Nội (Hybrid)",
+      "han_nop": "2026-11-30",
+      "nguoi_phu_trach_id": "a0000000-0000-0000-0000-000000000002",
+      "trang_thai": "DANG_TUYEN",
+      "deleted_at": null
+    },
+    {
+      "id": "c1000000-0000-0000-0000-000000000002",
+      "vi_tri_id": "b1000000-0000-0000-0000-000000000002",
+      "tieu_de": "Tuyển Kỹ Sư AI & RAG Specialist (Lương Tới 55 Triệu) - Thưởng Cổ Phần ESOP",
+      "noi_dung": "Làm việc cùng đội ngũ RAG hàng đầu...",
+      "dia_diem": "Hà Nội / Remote",
+      "han_nop": "2026-12-15",
+      "nguoi_phu_trach_id": "a0000000-0000-0000-0000-000000000002",
+      "trang_thai": "DANG_TUYEN",
+      "deleted_at": null
+    },
+    {
+      "id": "15030f88-25ef-49de-8623-101efa9b8a64",
+      "vi_tri_id": "e92b27b8-5d86-472a-9781-4f188b5959dd",
+      "tieu_de": "tuyển vị chí testter",
+      "noi_dung": "công việc chuyên môn cao, lương 5-10 triệu vnd theo năng lực,thử việc ko lương",
+      "dia_diem": "Hà Nội (Hybrid)",
+      "han_nop": "2026-10-31",
+      "nguoi_phu_trach_id": "a0000000-0000-0000-0000-000000000001",
+      "trang_thai": "DANG_TUYEN",
+      "created_at": "2026-10-01T14:44:03.999Z",
+      "updated_at": "2026-10-01T14:44:03.999Z",
+      "deleted_at": null
+    },
+    {
+      "id": "89bfe2f8-a516-421a-946d-177db145d9ce",
+      "vi_tri_id": "113ad24b-d7a8-44b0-9561-7e424fb4234b",
+      "tieu_de": "tuyển gấp Frontend Developer lương 45 tr",
+      "noi_dung": "công việc đáp ứng yêu cầu kỹ thuật,mức lương khởi điểm cao,trả lương theo năng lực cá nhân",
+      "dia_diem": "Hà Nội (Hybrid)",
+      "han_nop": "2026-11-03",
+      "nguoi_phu_trach_id": "a0000000-0000-0000-0000-000000000001",
+      "trang_thai": "DANG_TUYEN",
+      "created_at": "2026-10-04T00:25:55.256Z",
+      "updated_at": "2026-10-04T00:25:55.256Z",
+      "deleted_at": null
+    }
+  ],
+  "UngVien": [
+    {
+      "id": "u1000000-0000-0000-0000-000000000001",
+      "tai_khoan_id": "a0000000-0000-0000-0000-000000000004",
+      "ho_ten": "Phạm Quốc An",
+      "email": "ungvien.an@gmail.com",
+      "so_dien_thoai": "0933112233",
+      "dia_chi": "Cầu Giấy, Hà Nội",
+      "ky_nang_chinh": "Node.js, Express, Python, MySQL, Redis, Docker, RESTful API, Gemini API",
+      "kinh_nghiem_nam": 4.5,
+      "deleted_at": null
+    },
+    {
+      "id": "78f76543-7717-461e-8268-f346767d02f2",
+      "tai_khoan_id": "b9e290dc-aba1-47e5-b855-6028c08b768a",
+      "ho_ten": "Nguyễn Văn A",
+      "email": "nguyenvana@gmail.com",
+      "so_dien_thoai": "",
+      "dia_chi": "",
+      "ky_nang_chinh": "",
+      "kinh_nghiem_nam": 0,
+      "created_at": "2026-10-01T14:39:10.540Z",
+      "updated_at": "2026-10-01T14:39:10.540Z",
+      "deleted_at": null
+    },
+    {
+      "id": "8e9789cd-1c14-421a-aed1-179831ca3197",
+      "tai_khoan_id": "4bee7753-a676-45e5-9459-fa9ef12c6bee",
+      "ho_ten": "Minh Hoàng",
+      "email": "dtc245200096@ictu.edu.vn",
+      "so_dien_thoai": "0985453556",
+      "dia_chi": "",
+      "ky_nang_chinh": "",
+      "kinh_nghiem_nam": 0,
+      "created_at": "2026-10-01T14:41:01.894Z",
+      "updated_at": "2026-10-01T14:41:01.894Z",
+      "deleted_at": null
+    },
+    {
+      "id": "e226b350-4b20-49e3-b516-8896935f7c91",
+      "tai_khoan_id": null,
+      "ho_ten": "Ứng viên mới",
+      "email": "ungvien@example.com",
+      "so_dien_thoai": "0900000000",
+      "dia_chi": "",
+      "ky_nang_chinh": "",
+      "kinh_nghiem_nam": 0,
+      "created_at": "2026-10-01T14:45:50.216Z",
+      "updated_at": "2026-10-01T14:45:50.216Z",
+      "deleted_at": null
+    }
+  ],
+  "HoSoCV": [
+    {
+      "id": "h1000000-0000-0000-0000-000000000001",
+      "ung_vien_id": "u1000000-0000-0000-0000-000000000001",
+      "ten_file": "CV_PhamQuocAn_SeniorBackend.pdf",
+      "duong_dan_file": "/uploads/cvs/CV_PhamQuocAn_SeniorBackend.pdf",
+      "dinh_dang": "pdf",
+      "dung_luong_bytes": 1450200,
+      "vanBanTrichXuat": "HỌ VÀ TÊN: PHẠM QUỐC AN\nEMAIL: ungvien.an@gmail.com | ĐT: 0933112233\nVỊ TRÍ ỨNG TUYỂN: Senior Backend Engineer\n\nTỔNG QUAN NĂNG LỰC:\n- 4.5 năm kinh nghiệm phát triển hệ thống backend hiệu năng cao bằng Node.js và Python.\n- Tối ưu hóa cơ sở dữ liệu quan hệ MySQL, PostgreSQL và kiến trúc cache phân tán Redis.\n- Triển khai microservices với Docker, Kubernetes và CI/CD GitHub Actions.\n- Tích hợp thành công mô hình ngôn ngữ lớn (LLM) OpenAI, Google Gemini vào quy trình nghiệp vụ.\n\nKINH NGHIỆM LÀM VIỆC:\n1. Senior Backend Developer - Công ty TechVina (2023 - Nay):\n- Xây dựng RESTful API phục vụ 500,000 người dùng hoạt động hàng tháng.\n- Tối ưu hóa thời gian phản hồi API từ 350ms xuống 65ms bằng Redis caching và indexing MySQL.\n- Đóng gói ứng dụng chạy container Docker chuẩn hóa môi trường phát triển.\n2. Backend Developer - Công ty F-Solution (2020 - 2023):\n- Phát triển module quản lý người dùng, phân quyền RBAC và tích hợp cổng thanh toán.\n- Viết test tự động đạt độ bao phủ mã 85%.\n\nKỸ NĂNG KỸ THUẬT:\n- Ngôn ngữ: JavaScript/TypeScript, Python, SQL\n- Frameworks: Node.js, Express, FastAPI\n- Cơ sở dữ liệu: MySQL, Redis, MongoDB\n- Công cụ & DevOps: Docker, Git, CI/CD, Postman, Linux\n- Ngoại ngữ: Tiếng Anh giao tiếp tốt (IELTS 7.0)",
+      "phien_ban": 1,
+      "deleted_at": null
+    },
+    {
+      "id": "98ce4381-7e35-4a3a-8f22-78d79ef90f3c",
+      "ung_vien_id": "e226b350-4b20-49e3-b516-8896935f7c91",
+      "ten_file": "BÃ¡o CÃ¡o.docx",
+      "duong_dan_file": "/uploads/cvs/CV_1790865950148-487159779.docx",
+      "dinh_dang": "docx",
+      "dung_luong_bytes": 4470232,
+      "vanBanTrichXuat": "NỘI DUNG TRÍCH XUẤT TỰ ĐỘNG TỪ TỆP CV: BÃ¡o CÃ¡o.docx\nĐịnh dạng: DOCX | Trích xuất thành công qua OCR Engine.\nKỸ NĂNG: Node.js, Express, JavaScript, TypeScript, Python, MySQL, Redis, Docker, RESTful API, AI Integration.\nKINH NGHIỆM: 3+ năm phát triển hệ thống backend, tối ưu hóa cơ sở dữ liệu và triển khai kiến trúc microservices.\nHỌC VẤN: Cử nhân Công nghệ Thông tin - Đại học Bách Khoa Hà Nội.\nNGOẠI NGỮ: Tiếng Anh giao tiếp tốt trong môi trường quốc tế.",
+      "phien_ban": 1,
+      "created_at": "2026-10-01T14:45:50.221Z",
+      "updated_at": "2026-10-01T14:45:50.221Z",
+      "deleted_at": null
+    }
+  ],
+  "LuotUngTuyen": [
+    {
+      "id": "l1000000-0000-0000-0000-000000000001",
+      "tin_tuyen_dung_id": "c1000000-0000-0000-0000-000000000001",
+      "ung_vien_id": "u1000000-0000-0000-0000-000000000001",
+      "ho_so_cv_id": "h1000000-0000-0000-0000-000000000001",
+      "nguon_id": "s1000000-0000-0000-0000-000000000003",
+      "trang_thai": "DANG_PHONG_VAN",
+      "diem_danh_gia_tong": 92.5,
+      "ghi_chu": "Hồ sơ kỹ thuật rất ấn tượng, AI đối sánh đạt điểm 94/100.",
+      "created_at": "2026-10-01T08:30:00.000Z",
+      "deleted_at": null
+    },
+    {
+      "id": "935d62b6-4f43-4a03-8a97-de12b1da32bf",
+      "tin_tuyen_dung_id": "15030f88-25ef-49de-8623-101efa9b8a64",
+      "ung_vien_id": "8e9789cd-1c14-421a-aed1-179831ca3197",
+      "ho_so_cv_id": "98ce4381-7e35-4a3a-8f22-78d79ef90f3c",
+      "nguon_id": "s1000000-0000-0000-0000-000000000003",
+      "trang_thai": "DANG_PHONG_VAN",
+      "diem_danh_gia_tong": null,
+      "ghi_chu": "hết tiền",
+      "created_at": "2026-10-01T14:45:56.579Z",
+      "updated_at": "2026-10-01T15:03:47.664Z",
+      "deleted_at": null
+    }
+  ],
+  "LichPhongVan": [
+    {
+      "id": "m1000000-0000-0000-0000-000000000001",
+      "luot_ung_tuyen_id": "l1000000-0000-0000-0000-000000000001",
+      "nguoi_phong_van_id": "a0000000-0000-0000-0000-000000000002",
+      "thoi_gian_bat_dau": "2026-10-05 14:00:00",
+      "thoi_gian_ket_thuc": "2026-10-05 15:30:00",
+      "hinh_thuc": "ONLINE",
+      "dia_diem_hoac_link": "https://meet.google.com/xyz-recruitment-interview",
+      "trang_thai": "LEN_LICH",
+      "ghi_chu": "Phỏng vấn chuyên môn kỹ thuật vòng 1 cùng Tech Lead.",
+      "deleted_at": null
+    },
+    {
+      "id": "90e771a8-121a-4595-ae5b-374f6e74987d",
+      "luot_ung_tuyen_id": "935d62b6-4f43-4a03-8a97-de12b1da32bf",
+      "nguoi_phong_van_id": "a0000000-0000-0000-0000-000000000001",
+      "thoi_gian_bat_dau": "2026-10-01T11:05",
+      "thoi_gian_ket_thuc": "2026-10-01T11:05",
+      "hinh_thuc": "OFFLINE",
+      "dia_diem_hoac_link": "tòa 20a",
+      "trang_thai": "LEN_LICH",
+      "ghi_chu": "cv",
+      "created_at": "2026-10-01T15:03:47.669Z",
+      "updated_at": "2026-10-01T15:03:47.669Z",
+      "deleted_at": null
+    }
+  ],
+  "DanhGiaPhongVan": [
+    {
+      "id": "d1000000-0000-0000-0000-000000000001",
+      "lich_phong_van_id": "m1000000-0000-0000-0000-000000000001",
+      "nguoi_danh_gia_id": "a0000000-0000-0000-0000-000000000002",
+      "diem_chuyen_mon": 9,
+      "diem_ky_nang_mem": 8,
+      "diem_van_hoa": 9,
+      "nhan_xet": "Ứng viên trả lời trôi chảy các câu hỏi về Node.js event loop, caching Redis và thiết kế RESTful API an toàn. Phù hợp văn hóa công ty.",
+      "de_xuat": "DAT",
+      "deleted_at": null
+    }
+  ],
+  "NguonTuyenDung": [
+    {
+      "id": "s1000000-0000-0000-0000-000000000001",
+      "ten_nguon": "LinkedIn Recruiter",
+      "loai_nguon": "LINKEDIN",
+      "chi_phi_co_dinh": 8500000,
+      "mo_ta": "Kênh tuyển dụng cấp cao",
+      "deleted_at": null
+    },
+    {
+      "id": "s1000000-0000-0000-0000-000000000002",
+      "ten_nguon": "TopCV Premium",
+      "loai_nguon": "TOPCV",
+      "chi_phi_co_dinh": 5000000,
+      "mo_ta": "Sàn TopCV",
+      "deleted_at": null
+    },
+    {
+      "id": "s1000000-0000-0000-0000-000000000003",
+      "ten_nguon": "Website Tuyển Dụng Công Ty",
+      "loai_nguon": "WEBSITE_CONG_TY",
+      "chi_phi_co_dinh": 0,
+      "mo_ta": "Website công ty",
+      "deleted_at": null
+    }
+  ],
+  "HoSoTiemNang": [
+    {
+      "id": "t1000000-0000-0000-0000-000000000001",
+      "ung_vien_id": "u1000000-0000-0000-0000-000000000001",
+      "vi_tri_quan_tam_id": "b1000000-0000-0000-0000-000000000001",
+      "ky_nang_noi_bat": "Node.js, Redis, AI Integration",
+      "diem_tiem_nang": 90,
+      "ghi_chu_talent_pool": "Hồ sơ tài năng tiềm năng cao",
+      "deleted_at": null
+    }
+  ],
+  "ThongBao": [
+    {
+      "id": "n1000000-0000-0000-0000-000000000001",
+      "nguoi_nhan_id": "a0000000-0000-0000-0000-000000000004",
+      "tieu_de": "Lời mời tham dự phỏng vấn vòng chuyên môn - Vị trí Senior Backend",
+      "noi_dung": "Kính gửi bạn Phạm Quốc An, trân trọng mời bạn tham dự phỏng vấn lúc 14:00 ngày 05/10/2026.",
+      "loai_thong_bao": "LICH_PHONG_VAN",
+      "trang_thai_gui": "DA_GUI",
+      "da_doc": false,
+      "chi_tiet_loi": null,
+      "deleted_at": null
+    },
+    {
+      "id": "73224296-cfc1-471b-9bb2-7226c5383a75",
+      "nguoi_nhan_id": "4bee7753-a676-45e5-9459-fa9ef12c6bee",
+      "tieu_de": "Xác nhận tiếp nhận hồ sơ: tuyển vị chí testter",
+      "noi_dung": "Cảm ơn bạn đã nộp hồ sơ ứng tuyển. Chúng tôi đã nhận được CV và đang tiến hành sàng lọc. Trạng thái hiện tại: MỚI (MOI).",
+      "loai_thong_bao": "KET_QUA_UNG_TUYEN",
+      "trang_thai_gui": "DA_GUI",
+      "da_doc": true,
+      "chi_tiet_loi": null,
+      "created_at": "2026-10-01T14:45:56.587Z",
+      "updated_at": "2026-10-04T00:18:45.141Z",
+      "deleted_at": null
+    },
+    {
+      "id": "488a2566-e3e7-41d8-8db8-48d20e8f6306",
+      "nguoi_nhan_id": "4bee7753-a676-45e5-9459-fa9ef12c6bee",
+      "tieu_de": "Thư mời phỏng vấn - Tuyển dụng AI",
+      "noi_dung": "Trân trọng kính mời bạn tham gia buổi phỏng vấn vào lúc 2026-10-01T11:05. Hình thức: OFFLINE. Địa điểm / Đường dẫn: tòa 20a.",
+      "loai_thong_bao": "LICH_PHONG_VAN",
+      "trang_thai_gui": "CHO_GUI",
+      "da_doc": true,
+      "chi_tiet_loi": null,
+      "created_at": "2026-10-01T15:03:47.675Z",
+      "updated_at": "2026-10-04T00:18:43.859Z",
+      "deleted_at": null
+    }
+  ],
+  "KetQuaAI": [
+    {
+      "id": "k1000000-0000-0000-0000-000000000001",
+      "luot_ung_tuyen_id": "l1000000-0000-0000-0000-000000000001",
+      "ho_so_cv_id": "h1000000-0000-0000-0000-000000000001",
+      "loai_nghiep_vu": "DOI_SANH",
+      "diem_phu_hop": 94,
+      "du_lieu_dau_vao": {
+        "cv_id": "h1000000-0000-0000-0000-000000000001"
+      },
+      "ket_qua_json": {
+        "score": 94,
+        "matched_skills": [
+          "Node.js",
+          "Express",
+          "Python",
+          "MySQL",
+          "Redis",
+          "Docker",
+          "RESTful API",
+          "LLM Integration"
+        ],
+        "missing_skills": [
+          "Kubernetes chuyên sâu"
+        ],
+        "experience_years": 4.5,
+        "justification": "Ứng viên có 4.5 năm kinh nghiệm thực tế đúng với yêu cầu tối thiểu 3 năm. Kỹ năng backend và database rất phù hợp."
+      },
+      "prompt_da_dung": "Prompt đối sánh CV với JD",
+      "do_tin_cay": 0.98,
+      "trang_thai_hop_le": true,
+      "deleted_at": null
+    },
+    {
+      "id": "0eb3f94b-d31e-4fa6-8cb1-cb438df17870",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "bao nhiêu nhân viên tuyển dụng",
+        "cau_tra_loi": "Hệ thống ghi nhận tổng số ứng viên theo các giai đoạn: [{\"trang_thai\":\"MOI\",\"so_luong\":0},{\"trang_thai\":\"DANG_PHONG_VAN\",\"so_luong\":2},{\"trang_thai\":\"DAT\",\"so_luong\":0}].",
+        "sql_da_thuc_thi": "SELECT \n        v.ten_vi_tri, COUNT(l.id) AS so_don_ung_tuyen \n        FROM ViTriTuyenDung v \n        LEFT JOIN TinTuyenDung t ON t.vi_tri_id = v.id \n        LEFT JOIN LuotUngTuyen l ON l.tin_tuyen_dung_id = t.id \n        WHERE v.deleted_at IS NULL \n        GROUP BY v.id, v.ten_vi_tri;",
+        "du_lieu_thuc_te": [
+          {
+            "trang_thai": "MOI",
+            "so_luong": 0
+          },
+          {
+            "trang_thai": "DANG_PHONG_VAN",
+            "so_luong": 2
+          },
+          {
+            "trang_thai": "DAT",
+            "so_luong": 0
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê số lượng ứng tuyển theo vị trí tuyển dụng"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T04:00:45.870Z",
+      "deleted_at": null
+    },
+    {
+      "id": "ed18816d-b2c8-4359-ada1-e6420825107b",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "recruiter có bao nhiêu",
+        "cau_tra_loi": "Hệ thống ghi nhận tổng số ứng viên theo các giai đoạn: [{\"trang_thai\":\"MOI\",\"so_luong\":0},{\"trang_thai\":\"DANG_PHONG_VAN\",\"so_luong\":2},{\"trang_thai\":\"DAT\",\"so_luong\":0}].",
+        "sql_da_thuc_thi": "SELECT \n        v.ten_vi_tri, COUNT(l.id) AS so_don_ung_tuyen \n        FROM ViTriTuyenDung v \n        LEFT JOIN TinTuyenDung t ON t.vi_tri_id = v.id \n        LEFT JOIN LuotUngTuyen l ON l.tin_tuyen_dung_id = t.id \n        WHERE v.deleted_at IS NULL \n        GROUP BY v.id, v.ten_vi_tri;",
+        "du_lieu_thuc_te": [
+          {
+            "trang_thai": "MOI",
+            "so_luong": 0
+          },
+          {
+            "trang_thai": "DANG_PHONG_VAN",
+            "so_luong": 2
+          },
+          {
+            "trang_thai": "DAT",
+            "so_luong": 0
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê số lượng ứng tuyển theo vị trí tuyển dụng"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T04:01:37.724Z",
+      "deleted_at": null
+    },
+    {
+      "id": "be5cdc00-c763-483d-9d74-e4c46d172b5b",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Hệ thống có bao nhiêu recruiter?",
+        "cau_tra_loi": "Hệ thống hiện có tổng cộng **1** chuyên viên tuyển dụng (RECRUITER):\n1. **Trần Thảo Linh** (Username: `recruiter_linh` | Email: recruiter@tuyendungai.vn | SĐT: Chưa cập nhật) - Trạng thái: 🟢 Hoạt động - Đang phụ trách: **2** tin tuyển dụng.",
+        "sql_da_thuc_thi": "SELECT id, ho_ten, ten_dang_nhap, email, so_dien_thoai, vai_tro, trang_thai \nFROM TaiKhoan \nWHERE vai_tro = 'RECRUITER' AND deleted_at IS NULL;",
+        "du_lieu_thuc_te": [
+          {
+            "id": "a0000000-0000-0000-0000-000000000002",
+            "ho_ten": "Trần Thảo Linh",
+            "ten_dang_nhap": "recruiter_linh",
+            "email": "recruiter@tuyendungai.vn",
+            "so_dien_thoai": "Chưa cập nhật",
+            "trang_thai": "HOAT_DONG",
+            "so_tin_phu_trach": 2
+          }
+        ],
+        "mo_ta_truy_van": "Danh sách và số lượng chuyên viên tuyển dụng (RECRUITER)"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T04:09:49.768Z",
+      "deleted_at": null
+    },
+    {
+      "id": "c75bf06b-8a10-4ded-8a92-77a9fd0afe65",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Hệ thống có bao nhiêu ứng viên?",
+        "cau_tra_loi": "Hệ thống ghi nhận **4** hồ sơ ứng viên và **2** lượt ứng tuyển thực tế:\n- 📥 **Mới nộp (MOI)**: 0 hồ sơ\n- 📅 **Đang phỏng vấn (DANG_PHONG_VAN)**: 2 hồ sơ\n- 🎉 **Trúng tuyển (DAT)**: 0 hồ sơ\n- ❌ **Không đạt (KHONG_DAT)**: 0 hồ sơ\n*(Danh sách ứng viên: Phạm Quốc An, Nguyễn Văn A, Minh Hoàng, Ứng viên mới)*",
+        "sql_da_thuc_thi": "SELECT \n  COUNT(DISTINCT u.id) AS tong_ung_vien,\n  COUNT(l.id) AS tong_don_ung_tuyen,\n  COUNT(CASE WHEN l.trang_thai = 'MOI' THEN 1 END) AS so_don_moi,\n  COUNT(CASE WHEN l.trang_thai = 'DANG_PHONG_VAN' THEN 1 END) AS dang_phong_van,\n  COUNT(CASE WHEN l.trang_thai = 'DAT' THEN 1 END) AS da_trung_tuyen,\n  COUNT(CASE WHEN l.trang_thai = 'KHONG_DAT' THEN 1 END) AS khong_dat\nFROM UngVien u \nLEFT JOIN LuotUngTuyen l ON l.ung_vien_id = u.id AND l.deleted_at IS NULL \nWHERE u.deleted_at IS NULL;",
+        "du_lieu_thuc_te": [
+          {
+            "tong_ung_vien": 4,
+            "tong_don_ung_tuyen": 2,
+            "so_don_moi": 0,
+            "dang_phong_van": 2,
+            "da_trung_tuyen": 0,
+            "khong_dat": 0
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê chi tiết số lượng ứng viên và lượt ứng tuyển"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T04:09:59.389Z",
+      "deleted_at": null
+    },
+    {
+      "id": "cba1e3b7-0917-4b30-9d10-72e4b9c34eb6",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Công ty có bao nhiêu nhân viên?",
+        "cau_tra_loi": "Hệ thống có tổng cộng **2** nhân sự nội bộ (gồm **1** Quản trị viên và **1** Chuyên viên tuyển dụng):\n1. **Nguyễn Quản Trị** (`admin`) - Vai trò: **ADMIN** | Email: admin@tuyendungai.vn (Hoạt động)\n2. **Trần Thảo Linh** (`recruiter_linh`) - Vai trò: **RECRUITER** | Email: recruiter@tuyendungai.vn (Hoạt động)",
+        "sql_da_thuc_thi": "SELECT id, ho_ten, ten_dang_nhap, email, vai_tro, trang_thai \nFROM TaiKhoan \nWHERE vai_tro IN ('ADMIN', 'RECRUITER') AND deleted_at IS NULL;",
+        "du_lieu_thuc_te": [
+          {
+            "ho_ten": "Nguyễn Quản Trị",
+            "ten_dang_nhap": "admin",
+            "vai_tro": "ADMIN",
+            "email": "admin@tuyendungai.vn",
+            "trang_thai": "HOAT_DONG"
+          },
+          {
+            "ho_ten": "Trần Thảo Linh",
+            "ten_dang_nhap": "recruiter_linh",
+            "vai_tro": "RECRUITER",
+            "email": "recruiter@tuyendungai.vn",
+            "trang_thai": "HOAT_DONG"
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê tổng số nhân sự nội bộ (ADMIN & RECRUITER)"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T04:09:59.401Z",
+      "deleted_at": null
+    },
+    {
+      "id": "5a2b5063-8a73-4c73-ad06-5a37a6d820c1",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Có bao nhiêu admin?",
+        "cau_tra_loi": "Hệ thống hiện ghi nhận **1** Quản trị viên (ADMIN):\n1. **Nguyễn Quản Trị** (Username: `admin` | Email: admin@tuyendungai.vn) - 🟢 Hoạt động",
+        "sql_da_thuc_thi": "SELECT id, ho_ten, ten_dang_nhap, email, so_dien_thoai, vai_tro, trang_thai \nFROM TaiKhoan \nWHERE vai_tro = 'ADMIN' AND deleted_at IS NULL;",
+        "du_lieu_thuc_te": [
+          {
+            "id": "a0000000-0000-0000-0000-000000000001",
+            "ho_ten": "Nguyễn Quản Trị",
+            "ten_dang_nhap": "admin",
+            "email": "admin@tuyendungai.vn",
+            "trang_thai": "HOAT_DONG"
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê danh sách tài khoản Quản trị viên (ADMIN)"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T04:09:59.410Z",
+      "deleted_at": null
+    },
+    {
+      "id": "33d6d399-37ec-4dd8-a278-d679da30d8b2",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Hãy liệt kê số lượng tài khoản theo từng vai trò và cho biết bao nhiêu tài khoản đang bị khóa.",
+        "cau_tra_loi": "Hệ thống hiện quản lý tổng cộng **5** tài khoản người dùng:\n- 🛡️ **Quản trị viên (ADMIN)**: 1 tài khoản\n- 👥 **Tuyển dụng (RECRUITER)**: 1 tài khoản\n- 🎯 **Ứng viên (CANDIDATE)**: 3 tài khoản\n*(Tất cả tài khoản đang ở trạng thái Hoạt động)*",
+        "sql_da_thuc_thi": "SELECT vai_tro, trang_thai, COUNT(id) AS so_luong \nFROM TaiKhoan \nWHERE deleted_at IS NULL \nGROUP BY vai_tro, trang_thai;",
+        "du_lieu_thuc_te": [
+          {
+            "vai_tro": "ADMIN",
+            "so_luong": 1
+          },
+          {
+            "vai_tro": "RECRUITER",
+            "so_luong": 1
+          },
+          {
+            "vai_tro": "CANDIDATE",
+            "so_luong": 3
+          },
+          {
+            "trang_thai_khoa": 0
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê tổng số tài khoản người dùng theo vai trò"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T10:49:57.275Z",
+      "deleted_at": null
+    },
+    {
+      "id": "cfb60dee-9143-40f7-b881-0c3d4daed674",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Tôi muốn chuyển một nhân viên sang quyền Admin. Hãy kiểm tra quyền hạn của tôi và hướng dẫn quy trình thực hiện.",
+        "cau_tra_loi": "Hệ thống hiện ghi nhận **1** Quản trị viên (ADMIN):\n1. **Nguyễn Quản Trị** (Username: `admin` | Email: admin@tuyendungai.vn) - 🟢 Hoạt động",
+        "sql_da_thuc_thi": "SELECT id, ho_ten, ten_dang_nhap, email, so_dien_thoai, vai_tro, trang_thai \nFROM TaiKhoan \nWHERE vai_tro = 'ADMIN' AND deleted_at IS NULL;",
+        "du_lieu_thuc_te": [
+          {
+            "id": "a0000000-0000-0000-0000-000000000001",
+            "ho_ten": "Nguyễn Quản Trị",
+            "ten_dang_nhap": "admin",
+            "email": "admin@tuyendungai.vn",
+            "trang_thai": "HOAT_DONG"
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê danh sách tài khoản Quản trị viên (ADMIN)"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-03T10:50:17.284Z",
+      "deleted_at": null
+    },
+    {
+      "id": "9005742b-5d3f-4204-8016-21772ec663ec",
+      "luot_ung_tuyen_id": null,
+      "ho_so_cv_id": null,
+      "loai_nghiep_vu": "HOI_DAP",
+      "diem_phu_hop": null,
+      "du_lieu_dau_vao": {
+        "luot_ung_tuyen_id": null,
+        "ho_so_cv_id": null
+      },
+      "ket_qua_json": {
+        "cau_hoi": "Tỷ lệ ứng viên vượt qua vòng phỏng vấn tuần này?",
+        "cau_tra_loi": "Hệ thống ghi nhận **4** hồ sơ ứng viên và **2** lượt ứng tuyển thực tế:\n- 📥 **Mới nộp (MOI)**: 0 hồ sơ\n- 📅 **Đang phỏng vấn (DANG_PHONG_VAN)**: 2 hồ sơ\n- 🎉 **Trúng tuyển (DAT)**: 0 hồ sơ\n- ❌ **Không đạt (KHONG_DAT)**: 0 hồ sơ\n*(Danh sách ứng viên: Phạm Quốc An, Nguyễn Văn A, Minh Hoàng, Ứng viên mới)*",
+        "sql_da_thuc_thi": "SELECT \n  COUNT(DISTINCT u.id) AS tong_ung_vien,\n  COUNT(l.id) AS tong_don_ung_tuyen,\n  COUNT(CASE WHEN l.trang_thai = 'MOI' THEN 1 END) AS so_don_moi,\n  COUNT(CASE WHEN l.trang_thai = 'DANG_PHONG_VAN' THEN 1 END) AS dang_phong_van,\n  COUNT(CASE WHEN l.trang_thai = 'DAT' THEN 1 END) AS da_trung_tuyen,\n  COUNT(CASE WHEN l.trang_thai = 'KHONG_DAT' THEN 1 END) AS khong_dat\nFROM UngVien u \nLEFT JOIN LuotUngTuyen l ON l.ung_vien_id = u.id AND l.deleted_at IS NULL \nWHERE u.deleted_at IS NULL;",
+        "du_lieu_thuc_te": [
+          {
+            "tong_ung_vien": 4,
+            "tong_don_ung_tuyen": 2,
+            "so_don_moi": 0,
+            "dang_phong_van": 2,
+            "da_trung_tuyen": 0,
+            "khong_dat": 0
+          }
+        ],
+        "mo_ta_truy_van": "Thống kê chi tiết số lượng ứng viên và lượt ứng tuyển"
+      },
+      "prompt_da_dung": "Safe Text-to-SQL transformation with read-only whitelist security check.",
+      "do_tin_cay": 0.995,
+      "trang_thai_hop_le": true,
+      "created_at": "2026-10-04T01:56:33.038Z",
+      "deleted_at": null
+    }
+  ],
+  "BaoCaoTuyenDung": [
+    {
+      "id": "r1000000-0000-0000-0000-000000000001",
+      "tieu_de": "Báo cáo hiệu quả tuyển dụng Quý 3/2026",
+      "ky_bao_cao": "Q3-2026",
+      "tong_don_ung_tuyen": 45,
+      "so_luot_phong_van": 18,
+      "so_luot_dat": 5,
+      "ty_le_chuyen_doi": 27.78,
+      "chi_phi_trung_binh": 2700000,
+      "du_lieu_chi_tiet": {},
+      "nguoi_lap_id": "a0000000-0000-0000-0000-000000000001",
+      "deleted_at": null
+    }
+  ],
+  "SuKienTrangThai": [
+    {
+      "id": "e2000000-0000-0000-0000-000000000001",
+      "luot_ung_tuyen_id": "l1000000-0000-0000-0000-000000000001",
+      "trang_thai_cu": "KHOI_TAO",
+      "trang_thai_moi": "MOI",
+      "nguoi_thuc_hien_id": "a0000000-0000-0000-0000-000000000004",
+      "ly_do": "Ứng viên nộp hồ sơ trực tuyến qua website công ty.",
+      "thoi_gian": "2026-10-01T08:30:00.000Z",
+      "deleted_at": null
+    },
+    {
+      "id": "e2000000-0000-0000-0000-000000000002",
+      "luot_ung_tuyen_id": "l1000000-0000-0000-0000-000000000001",
+      "trang_thai_cu": "MOI",
+      "trang_thai_moi": "DANG_PHONG_VAN",
+      "nguoi_thuc_hien_id": "a0000000-0000-0000-0000-000000000002",
+      "ly_do": "Hồ sơ đạt tiêu chuẩn sơ loại, lên lịch phỏng vấn chuyên môn.",
+      "thoi_gian": "2026-10-01T10:15:00.000Z",
+      "deleted_at": null
+    },
+    {
+      "id": "d47bc3a8-84a5-4ca7-ae3c-9d7d50f5eb77",
+      "luot_ung_tuyen_id": "935d62b6-4f43-4a03-8a97-de12b1da32bf",
+      "trang_thai_cu": "KHOI_TAO",
+      "trang_thai_moi": "MOI",
+      "nguoi_thuc_hien_id": "4bee7753-a676-45e5-9459-fa9ef12c6bee",
+      "ly_do": "Ứng viên nộp hồ sơ ứng tuyển trực tuyến.",
+      "thoi_gian": "2026-10-01T14:45:56.582Z",
+      "created_at": "2026-10-01T14:45:56.582Z",
+      "updated_at": "2026-10-01T14:45:56.583Z",
+      "deleted_at": null
+    },
+    {
+      "id": "7def55d6-5359-4933-a393-839f3423d975",
+      "luot_ung_tuyen_id": "935d62b6-4f43-4a03-8a97-de12b1da32bf",
+      "trang_thai_cu": "MOI",
+      "trang_thai_moi": "DANG_PHONG_VAN",
+      "nguoi_thuc_hien_id": "a0000000-0000-0000-0000-000000000001",
+      "ly_do": "Lên lịch phỏng vấn thành công, chuyển hồ sơ sang vòng phỏng vấn.",
+      "thoi_gian": "2026-10-01T15:03:47.664Z",
+      "created_at": "2026-10-01T15:03:47.664Z",
+      "updated_at": "2026-10-01T15:03:47.664Z",
+      "deleted_at": null
+    }
+  ],
+  "KhoanChi": [
+    {
+      "id": "c2000000-0000-0000-0000-000000000001",
+      "tin_tuyen_dung_id": "c1000000-0000-0000-0000-000000000001",
+      "nguon_id": "s1000000-0000-0000-0000-000000000001",
+      "ten_khoan_chi": "Chi phí đẩy tin LinkedIn Top Placement 30 ngày",
+      "so_tien": 4500000,
+      "ngay_chi": "2026-10-01",
+      "hoa_don_url": "/uploads/invoices/inv-001.pdf",
+      "nguoi_duyet_id": "a0000000-0000-0000-0000-000000000001",
+      "ghi_chu": "Thẻ tín dụng công ty",
+      "deleted_at": null
+    },
+    {
+      "id": "c2000000-0000-0000-0000-000000000002",
+      "tin_tuyen_dung_id": "c1000000-0000-0000-0000-000000000002",
+      "nguon_id": "s1000000-0000-0000-0000-000000000002",
+      "ten_khoan_chi": "Gói lọc hồ sơ ứng viên AI & Big Data TopCV",
+      "so_tien": 3500000,
+      "ngay_chi": "2026-10-01",
+      "hoa_don_url": "/uploads/invoices/inv-002.pdf",
+      "nguoi_duyet_id": "a0000000-0000-0000-0000-000000000001",
+      "ghi_chu": "Hóa đơn VAT điện tử",
+      "deleted_at": null
+    }
+  ],
+  "TuongTac": [
+    {
+      "id": "i1000000-0000-0000-0000-000000000001",
+      "ung_vien_id": "u1000000-0000-0000-0000-000000000001",
+      "nguoi_thuc_hien_id": "a0000000-0000-0000-0000-000000000002",
+      "loai_tuong_tac": "EMAIL",
+      "noi_dung": "Gửi thư mời phỏng vấn kỹ thuật và link Google Meet.",
+      "thoi_gian": "2026-10-01T11:00:00.000Z",
+      "deleted_at": null
+    }
+  ]
+}

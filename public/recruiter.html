@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Tuyển Dụng - Recruiter Management Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">💼</div>
+        <div class="brand-text">
+          <h2>Tuyển Dụng AI</h2>
+          <span>Nhân Viên / Recruiter</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li><a class="nav-link active" data-tab="applications"><span class="icon">📋</span> Danh Sách Ứng Viên</a></li>
+        <li><a class="nav-link" data-tab="my-jobs"><span class="icon">📢</span> Tin Tuyển Dụng Phụ Trách</a></li>
+        <li><a class="nav-link" data-tab="interviews"><span class="icon">📅</span> Lịch Phỏng Vấn</a></li>
+        <li id="menuItemAdminPortal" style="display:none;">
+          <a class="nav-link" href="/admin.html" style="color:#a5b4fc;"><span class="icon">⚡</span> Bảng Quản Trị KPI</a>
+        </li>
+        <li style="margin-top:auto; padding-top:1rem; border-top:1px solid var(--border-subtle);">
+          <a class="nav-link" id="btnSidebarLogout" style="color:#f87171;"><span class="icon">🚪</span> Đăng Xuất</a>
+        </li>
+      </ul>
+
+      <div class="user-badge">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="user-avatar">
+        <div class="user-info">
+          <div class="user-name" id="recruiterUserName">Trần Thảo Linh</div>
+          <div class="user-role" id="recruiterUserRole">Chuyên Viên Tuyển Dụng</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <h1 class="page-title">Quản Lý Tuyển Dụng & Sàng Lọc AI</h1>
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <span class="badge badge-pv" id="recruiterRoleBadge">VAI TRÒ: RECRUITER</span>
+          <a href="/admin.html" class="btn btn-secondary btn-sm" id="btnBackAdmin" style="display:none; color:#a5b4fc;">
+            ⚡ Bảng Quản Trị KPI
+          </a>
+          <button class="btn btn-secondary btn-sm" id="btnTopbarLogout" style="color:#f87171;">
+            🚪 Đăng Xuất
+          </button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <!-- TAB 1: APPLICATIONS -->
+        <section id="tab-applications" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📋 Hồ Sơ Ứng Tuyển & Phễu Xử Lý Tuần Tự</h3>
+              <div style="display:flex; gap:0.5rem;">
+                <select id="filterStatus" class="form-control" style="width:160px; padding:0.35rem;">
+                  <option value="">Tất cả trạng thái</option>
+                  <option value="MOI">Mới (MOI)</option>
+                  <option value="DANG_PHONG_VAN">Đang phỏng vấn</option>
+                  <option value="DAT">Trúng tuyển (DAT)</option>
+                  <option value="KHONG_DAT">Không đạt</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ứng Viên</th>
+                    <th>Tin Ứng Tuyển</th>
+                    <th>Điểm AI Đối Sánh</th>
+                    <th>Trạng Thái Tuần Tự</th>
+                    <th>Tệp CV</th>
+                    <th>Hành Động Nghiệp Vụ</th>
+                  </tr>
+                </thead>
+                <tbody id="applicationsTableBody">
+                  <tr><td colspan="6" style="text-align:center;">Đang tải danh sách hồ sơ...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: MY JOBS (RECRUITER SCOPE) -->
+        <section id="tab-my-jobs" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📢 Tin Tuyển Dụng Thuộc Phạm Vi Phụ Trách</h3>
+              <button class="btn btn-primary btn-sm" id="btnOpenCreateJobModal">+ Đăng Tin Mới</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tiêu Đề Tin</th>
+                    <th>Vị Trí</th>
+                    <th>Hạn Nộp</th>
+                    <th>Địa Điểm</th>
+                    <th>Trạng Thái</th>
+                    <th>Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="myJobsTableBody">
+                  <tr><td colspan="6" style="text-align:center;">Đang tải danh sách tin...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: INTERVIEWS -->
+        <section id="tab-interviews" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📅 Lịch Phỏng Vấn & Đánh Giá Điểm</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ứng Viên</th>
+                    <th>Thời Gian</th>
+                    <th>Hình Thức</th>
+                    <th>Địa Điểm / Link</th>
+                    <th>Trạng Thái</th>
+                    <th>Đánh Giá Chuyên Môn</th>
+                  </tr>
+                </thead>
+                <tbody id="interviewsTableBody">
+                  <tr><td colspan="6" style="text-align:center;">Đang tải lịch phỏng vấn...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal 1: AI Đối Sánh (DOI_SANH) -->
+  <div class="modal-overlay" id="aiMatchingModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">✨ Kết Quả AI Đối Sánh Kỹ Năng (DOI_SANH)</h3>
+        <button class="modal-close" onclick="closeModal('aiMatchingModal')">&times;</button>
+      </div>
+      <div id="aiMatchingBody">Đang phân tích...</div>
+    </div>
+  </div>
+
+  <!-- Modal 2: AI Gợi Ý Câu Hỏi (CAU_HOI) -->
+  <div class="modal-overlay" id="aiQuestionsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">❓ Gợi Ý Câu Hỏi Phỏng Vấn Theo Hồ Sơ (CAU_HOI)</h3>
+        <button class="modal-close" onclick="closeModal('aiQuestionsModal')">&times;</button>
+      </div>
+      <div id="aiQuestionsBody">Đang sinh câu hỏi...</div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Chuyển Trạng Thái Tuần Tự (F06) -->
+  <div class="modal-overlay" id="changeStatusModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🔄 Cập Nhật Trạng Thái Ứng Tuyển Tuần Tự</h3>
+        <button class="modal-close" onclick="closeModal('changeStatusModal')">&times;</button>
+      </div>
+      <form id="changeStatusForm">
+        <input type="hidden" id="changeStatusAppId" />
+        <div class="form-group">
+          <label class="form-label">Trạng thái hiện tại:</label>
+          <div id="currentStatusDisplay" style="font-weight:700; color:#a5b4fc; margin-bottom:0.5rem;">MOI</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Chuyển sang trạng thái tiếp theo:</label>
+          <select id="newStatusSelect" class="form-control" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lý do / Ghi chú (Lưu vào SuKienTrangThai):</label>
+          <textarea id="statusReason" class="form-control" rows="2" placeholder="Nhập lý do cập nhật..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Xác Nhận Cập Nhật</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Lên Lịch Phỏng Vấn (F07) -->
+  <div class="modal-overlay" id="scheduleModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📅 Lên Lịch Phỏng Vấn Ứng Viên</h3>
+        <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+      </div>
+      <form id="scheduleForm">
+        <input type="hidden" id="scheduleAppId" />
+        <div class="form-group">
+          <label class="form-label">Thời gian bắt đầu</label>
+          <input type="datetime-local" id="schedStartTime" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hình thức phỏng vấn</label>
+          <select id="schedMode" class="form-control">
+            <option value="ONLINE">Trực tuyến (Google Meet / Zoom)</option>
+            <option value="OFFLINE">Trực tiếp tại văn phòng</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Địa điểm hoặc Đường dẫn cuộc họp</label>
+          <input type="text" id="schedLocation" class="form-control" placeholder="Nhập địa điểm phòng họp hoặc link cuộc họp..." required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ghi chú cho ứng viên</label>
+          <textarea id="schedNotes" class="form-control" rows="2" placeholder="Chuẩn bị bài test hoặc tài liệu..."></textarea>
+        </div>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">
+          ℹ️ Khi lên lịch, hệ thống sẽ tự động cập nhật trạng thái ứng viên sang <strong>DANG_PHONG_VAN</strong> và gửi email thông báo.
+        </p>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Tạo Lịch & Gửi Thư Mời</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Đánh Giá Phỏng Vấn (DanhGiaPhongVan) -->
+  <div class="modal-overlay" id="evalModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">⭐ Đánh Giá Kết Quả Phỏng Vấn</h3>
+        <button class="modal-close" onclick="closeModal('evalModal')">&times;</button>
+      </div>
+      <form id="evalForm">
+        <input type="hidden" id="evalLichId" />
+        <div class="form-group">
+          <label class="form-label">Điểm Chuyên Môn (1 - 10)</label>
+          <input type="number" id="evalTech" min="1" max="10" value="8" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Điểm Kỹ Năng Mềm (1 - 10)</label>
+          <input type="number" id="evalSoft" min="1" max="10" value="8" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Điểm Hòa Nhập Văn Hóa (1 - 10)</label>
+          <input type="number" id="evalCulture" min="1" max="10" value="9" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Đề Xuất Tuyển Dụng</label>
+          <select id="evalRecommendation" class="form-control">
+            <option value="DAT">Đạt (DAT)</option>
+            <option value="KHONG_DAT">Không đạt (KHONG_DAT)</option>
+            <option value="XEM_XET_THEM">Cần xem xét thêm</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nhận Xét Chi Tiết</label>
+          <textarea id="evalNotes" class="form-control" rows="3" placeholder="Nhận xét điểm mạnh, điểm yếu..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success" style="width:100%;">Lưu Đánh Giá</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: Đăng Tin Tuyển Dụng Mới (F03) -->
+  <div class="modal-overlay" id="createJobModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📢 Đăng Tin Tuyển Dụng Mới</h3>
+        <button class="modal-close" onclick="closeModal('createJobModal')">&times;</button>
+      </div>
+      <form id="createJobForm">
+        <div class="form-group">
+          <label class="form-label">Vị Trí Tuyển Dụng (Nhập tên vị trí) <span style="color:#f87171;">*</span></label>
+          <input type="text" id="createJobViTri" class="form-control" placeholder="Ví dụ: Senior Backend Engineer, Chuyên viên Marketing, Kỹ sư AI..." required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tiêu Đề Tin Tuyển Dụng <span style="color:#f87171;">*</span></label>
+          <input type="text" id="createJobTitle" class="form-control" placeholder="Ví dụ: Tuyển Senior Node.js Backend Engineer" required />
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">Địa Điểm Làm Việc <span style="color:#f87171;">*</span></label>
+            <input type="text" id="createJobLocation" class="form-control" placeholder="Hà Nội (Hybrid) / TP.HCM / Remote" value="Hà Nội (Hybrid)" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hạn Nộp Hồ Sơ <span style="color:#f87171;">*</span></label>
+            <input type="date" id="createJobDeadline" class="form-control" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mô Tả Công Việc & Yêu Cầu Chi Tiết <span style="color:#f87171;">*</span></label>
+          <textarea id="createJobContent" class="form-control" rows="5" placeholder="Mô tả trách nhiệm công việc, yêu cầu kỹ năng, quyền lợi và chế độ đãi ngộ..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          🚀 Xác Nhận Đăng Tin Tuyển Dụng
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/js/recruiter-dashboard.js"></script>
+</body>
+</html>

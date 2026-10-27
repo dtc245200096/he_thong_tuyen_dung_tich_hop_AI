@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cổng Ứng Viên - Candidate Career Portal</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">🎯</div>
+        <div class="brand-text">
+          <h2>Cổng Ứng Viên</h2>
+          <span>Cơ Hội Nghề Nghiệp</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li><a class="nav-link active" data-tab="jobs"><span class="icon">💼</span> Tin Tuyển Dụng</a></li>
+        <li><a class="nav-link" data-tab="my-applications"><span class="icon">📂</span> Hồ Sơ Của Tôi</a></li>
+        <li><a class="nav-link" data-tab="my-interviews"><span class="icon">📅</span> Lịch Phỏng Vấn</a></li>
+        <li>
+          <a class="nav-link" data-tab="my-notifications" style="display:flex; align-items:center; justify-content:space-between;">
+            <span><span class="icon">🔔</span> Thông Báo Tuyển Dụng</span>
+            <span id="sidebarNotifBadge" class="badge badge-moi" style="font-size:0.7rem; padding:0.15rem 0.5rem; display:none;">0</span>
+          </a>
+        </li>
+        <li><a class="nav-link" data-tab="ai-chat"><span class="icon">🤖</span> Trợ Lý AI Tuyển Dụng</a></li>
+        <li style="margin-top:auto; padding-top:1rem; border-top:1px solid var(--border-subtle);">
+          <a class="nav-link" id="btnSidebarLogout" style="color:#f87171;"><span class="icon">🚪</span> Đăng Xuất</a>
+        </li>
+      </ul>
+
+      <div class="user-badge">
+        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" alt="Avatar" class="user-avatar">
+        <div class="user-info">
+          <div class="user-name" id="candidateUserName">Phạm Quốc An</div>
+          <div class="user-role">Ứng viên (CANDIDATE)</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <h1 class="page-title">Cơ Hội Việc Làm Hấp Dẫn</h1>
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <span class="badge badge-dat">VAI TRÒ: ỨNG VIÊN (CANDIDATE)</span>
+          <button class="btn btn-secondary btn-sm" id="btnTopbarLogout" style="color:#f87171;">
+            🚪 Đăng Xuất
+          </button>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <!-- TAB 1: BROWSE JOBS -->
+        <section id="tab-jobs" class="tab-content">
+          <div class="card" style="margin-bottom:2rem; background: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(168,85,247,0.1) 100%);">
+            <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:0.5rem;">Khám Phá Vị Trí Công Việc Đón Đầu Xu Hướng AI</h2>
+            <p style="color:var(--text-secondary); font-size:0.95rem;">
+              Ứng tuyển trực tuyến, tải CV định dạng PDF hoặc DOCX (tối đa 10 MiB). Hệ thống AI tự động phân tích và phản hồi tiến độ minh bạch.
+            </p>
+          </div>
+
+          <div id="jobListingsGrid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:1.5rem;">
+            <div>Đang tải tin tuyển dụng...</div>
+          </div>
+        </section>
+
+        <!-- TAB 2: MY APPLICATIONS & TIMELINE -->
+        <section id="tab-my-applications" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📂 Tiến Trình Ứng Tuyển Tuần Tự Của Tôi</h3>
+            </div>
+            <div id="myApplicationsContainer">
+              <p style="color:var(--text-secondary);">Đang tải tiến trình hồ sơ...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: MY INTERVIEWS -->
+        <section id="tab-my-interviews" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📅 Lịch Phỏng Vấn Của Tôi</h3>
+            </div>
+            <div id="myInterviewsContainer">
+              <p style="color:var(--text-secondary);">Đang tải lịch phỏng vấn...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: NOTIFICATIONS -->
+        <section id="tab-my-notifications" class="tab-content" style="display:none;">
+          <div class="card">
+            <div class="card-header" style="flex-wrap:wrap; gap:1rem;">
+              <div>
+                <h3 class="card-title">🔔 Trung Tâm Thông Báo & Cập Nhật Tiến Trình</h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.25rem;">
+                  Nhận tin tức kết quả tuyển dụng, lời mời phỏng vấn và các cập nhật mới nhất từ nhà tuyển dụng.
+                </p>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <button class="btn btn-secondary btn-sm" id="btnMarkAllRead">
+                  ✓ Đánh dấu tất cả đã đọc
+                </button>
+              </div>
+            </div>
+
+            <!-- Filter tabs for notifications -->
+            <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem; border-bottom:1px solid var(--border-subtle); padding-bottom:0.75rem;">
+              <button class="btn btn-sm btn-primary notif-filter-btn" data-filter="all" id="filterNotifAll">Tất cả (<span id="countNotifAll">0</span>)</button>
+              <button class="btn btn-sm btn-secondary notif-filter-btn" data-filter="unread" id="filterNotifUnread">Chưa đọc (<span id="countNotifUnread">0</span>)</button>
+              <button class="btn btn-sm btn-secondary notif-filter-btn" data-filter="read" id="filterNotifRead">Đã đọc (<span id="countNotifRead">0</span>)</button>
+            </div>
+
+            <!-- Notifications list container -->
+            <div id="myNotificationsContainer" style="display:flex; flex-direction:column; gap:0.85rem;">
+              <p style="color:var(--text-secondary);">Đang tải thông báo...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: AI CHAT ASSISTANT (Hỏi Đáp AI Chuẩn Giao Diện Chat Tự Nhiên) -->
+        <section id="tab-ai-chat" class="tab-content" style="display:none;">
+          <div class="chat-container">
+            <!-- Header cuộc trò chuyện -->
+            <div class="chat-header">
+              <div class="chat-header-info">
+                <div class="chat-avatar-bot">🤖</div>
+                <div>
+                  <h3 class="chat-header-title">Trợ Lý AI Tuyển Dụng & Sự Nghiệp</h3>
+                  <div class="chat-header-status">
+                    <span class="chat-status-dot"></span>
+                    <span>Trực tuyến 24/7 • Sẵn sàng giải đáp thắc mắc & tư vấn ứng tuyển</span>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="btnResetChat" title="Làm mới cuộc trò chuyện">
+                🔄 Xóa đoạn chat
+              </button>
+            </div>
+
+            <!-- Khung danh sách tin nhắn chat -->
+            <div class="chat-messages" id="candidateChatMessages">
+              <!-- Được điền tự động bởi candidate-dashboard.js -->
+            </div>
+
+            <!-- Gợi ý câu hỏi nhanh (Suggestion Chips) -->
+            <div class="chat-suggestions" id="chatSuggestions">
+              <span class="chat-chip" data-question="Các vị trí tuyển dụng nào đang mở?">💼 Vị trí đang mở?</span>
+              <span class="chat-chip" data-question="Làm sao để viết CV đạt điểm cao và vượt qua AI?">📝 Mẹo tối ưu điểm CV?</span>
+              <span class="chat-chip" data-question="Tiến độ hồ sơ ứng tuyển của tôi thế nào?">📂 Tiến độ hồ sơ của tôi?</span>
+              <span class="chat-chip" data-question="Lời khuyên để chuẩn bị phỏng vấn tốt nhất?">📅 Chuẩn bị phỏng vấn?</span>
+              <span class="chat-chip" data-question="Chính sách lương và chế độ đãi ngộ thế nào?">💰 Lương & đãi ngộ?</span>
+            </div>
+
+            <!-- Khung nhập tin nhắn -->
+            <form class="chat-input-area" id="candidateChatForm">
+              <input 
+                type="text" 
+                class="chat-input-box" 
+                id="candidateChatInput" 
+                placeholder="Hỏi bất kỳ điều gì về vị trí tuyển dụng, CV, phỏng vấn, tiến độ hồ sơ..." 
+                autocomplete="off" 
+              />
+              <button type="submit" class="btn btn-primary" id="btnCandidateChatSend" style="padding:0.75rem 1.4rem; display:flex; align-items:center; gap:0.4rem;">
+                <span>Gửi</span>
+                <span>➤</span>
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Nộp CV Ứng Tuyển -->
+  <div class="modal-overlay" id="applyModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Nộp Hồ Sơ Ứng Tuyển</h3>
+        <button class="modal-close" onclick="closeModal('applyModal')">&times;</button>
+      </div>
+
+      <div style="margin-bottom:1.25rem;">
+        <h4 id="applyJobTitle" style="color:#a5b4fc; font-size:1.1rem; margin-bottom:0.25rem;">Tiêu đề vị trí</h4>
+        <div id="applyJobDetails" style="font-size:0.85rem; color:var(--text-muted);">Mô tả ngắn</div>
+      </div>
+
+      <form id="applyForm">
+        <input type="hidden" id="applyJobId" />
+        
+        <!-- Drag and Drop Upload Zone -->
+        <div class="form-group">
+          <label class="form-label">Tải Lên File CV Của Bạn (PDF hoặc DOCX, Tối Đa 10 MiB)</label>
+          <div class="dropzone" id="cvDropzone">
+            <div class="dropzone-icon">📁</div>
+            <div class="dropzone-title" id="dropzoneText">Kéo thả file CV vào đây hoặc bấm để chọn tệp</div>
+            <div class="dropzone-hint">Chấp nhận: .pdf, .docx | Giới hạn dung lượng: 10 MiB</div>
+            <input type="file" id="cvFileInput" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;" />
+          </div>
+          <div id="fileUploadStatus" style="margin-top:0.5rem; font-size:0.85rem;"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ghi Chú Hoặc Thư Giới Thiệu Ngắn (Tùy chọn)</label>
+          <textarea id="applyNotes" class="form-control" rows="2" placeholder="Chia sẻ thêm về mục tiêu và mong muốn nghề nghiệp của bạn..."></textarea>
+        </div>
+
+        <button type="submit" id="btnSubmitApply" class="btn btn-primary" style="width:100%; padding:0.8rem;" disabled>
+          Nộp Hồ Sơ Ứng Tuyển
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="/js/candidate-dashboard.js"></script>
+</body>
+</html>
