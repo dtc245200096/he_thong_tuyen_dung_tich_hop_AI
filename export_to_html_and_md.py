@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Script đồng bộ báo cáo DOCX siêu toàn diện sang HTML và Markdown
+Bao gồm đầy đủ:
+- Danh mục hình ảnh biểu đồ
+- Khung chờ dán ảnh chụp màn hình (Screenshot Placeholder)
+- Toàn bộ các bảng dữ liệu & bảng test cases (> 214 TC)
 """
 import os
 import sys
@@ -63,7 +67,7 @@ def run_export():
         }
         body {
             font-family: 'Times New Roman', Times, serif;
-            font-size: 13pt;
+            font-size: 12pt;
             line-height: 1.35;
             color: #1e293b;
             background-color: #f8fafc;
@@ -79,7 +83,7 @@ def run_export():
             border-radius: 4px;
         }
         h1 {
-            font-size: 16pt;
+            font-size: 15pt;
             color: #1e3a8a;
             border-bottom: 2px solid #1e3a8a;
             padding-bottom: 6px;
@@ -87,12 +91,12 @@ def run_export():
             text-transform: uppercase;
         }
         h2 {
-            font-size: 14pt;
+            font-size: 13pt;
             color: #0f766e;
             margin-top: 24px;
         }
         h3 {
-            font-size: 13pt;
+            font-size: 12pt;
             color: #0f172a;
             margin-top: 18px;
         }
@@ -108,7 +112,7 @@ def run_export():
             width: 100%;
             border-collapse: collapse;
             margin: 16px 0;
-            font-size: 10.5pt;
+            font-size: 10pt;
         }
         th, td {
             border: 1px solid #cbd5e1;
@@ -155,6 +159,27 @@ def run_export():
             font-size: 11pt;
             color: #991b1b;
         }
+        .screenshot-placeholder {
+            border: 2px dashed #2563eb;
+            background-color: #f0f7ff;
+            padding: 24px 20px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 90%;
+            border-radius: 6px;
+        }
+        .placeholder-icon {
+            font-weight: bold;
+            font-size: 11pt;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+        .placeholder-desc {
+            font-size: 10pt;
+            font-style: italic;
+            color: #475569;
+            line-height: 1.4;
+        }
         @media print {
             body {
                 background: none;
@@ -177,6 +202,7 @@ def run_export():
 
     # Mapping of image captions to local files
     caption_to_img = {
+        "Hình 1.1: Sơ đồ quy trình tuyển dụng thủ công hiện tại (As-Is) & các điểm nghẽn": "docs_images/as_is_recruitment_flow.png",
         "Hình 2.1: Sơ đồ phân rã chức năng (FDD) Hệ thống Tuyển dụng AI": "docs_images/hinh_1_2_phan_ra_chuc_nang.png",
         "Hình 2.2: Biểu đồ Use Case tổng quát (URM Diagram)": "docs_images/hinh_1_1_urm.png",
         "Hình 2.3: Biểu đồ lớp tổng thể đầy đủ 17 thực thể chuẩn ATS": "docs_images/hinh_1_3_bieu_do_lop_day_du.png",
@@ -187,7 +213,14 @@ def run_export():
         "Hình 2.8: Sơ đồ trình tự Tiếp nhận CV, OCR & AI Đối sánh Năng lực RAG": "docs_images/seq_02_cv_ai_matching.png",
         "Hình 2.9: Sơ đồ trình tự Điều phối Lịch phỏng vấn & Gợi ý câu hỏi AI Copilot": "docs_images/seq_03_interview_ai_questions.png",
         "Hình 2.10: Sơ đồ trình tự Thống kê & Hỏi đáp điều hành Safe Text-to-SQL": "docs_images/seq_04_text_to_sql_analytics.png",
-        "Hình 2.11: Sơ đồ Quan hệ Thực thể Logic (ERD) 17 bảng dữ liệu": "docs_images/hinh_3_1_erd_logic.png"
+        "Hình 2.11: Sơ đồ hoạt động (Activity Diagram): Đăng nhập hệ thống & Phân quyền (UC-01)": "docs_images/act_01_login.png",
+        "Hình 2.12: Sơ đồ hoạt động (Activity Diagram): Đăng tin tuyển dụng (UC-02)": "docs_images/act_02_post_job.png",
+        "Hình 2.13: Sơ đồ hoạt động (Activity Diagram): Nộp hồ sơ ứng tuyển & OCR (UC-03)": "docs_images/act_03_apply_cv.png",
+        "Hình 2.14: Sơ đồ hoạt động (Activity Diagram): AI Đối sánh năng lực RAG (UC-04)": "docs_images/act_04_ai_matching.png",
+        "Hình 2.15: Sơ đồ hoạt động (Activity Diagram): Điều phối lịch phỏng vấn & Gợi ý câu hỏi (UC-05)": "docs_images/act_05_interview_schedule.png",
+        "Hình 2.16: Sơ đồ hoạt động (Activity Diagram): Safe Text-to-SQL Analytics (UC-06)": "docs_images/act_06_safe_text_to_sql.png",
+        "Hình 2.17: Sơ đồ luồng màn hình tổng quan (Screen Flow Diagram)": "docs_images/screen_flow_diagram.png",
+        "Hình 2.21: Sơ đồ Quan hệ Thực thể Logic (ERD) 17 bảng dữ liệu chuẩn 3NF": "docs_images/hinh_3_1_erd_logic.png"
     }
 
     for block in iter_block_items(doc):
@@ -216,13 +249,13 @@ def run_export():
                 md_parts.append(f"\n![{cap}]({path})\n*{cap}*\n")
                 continue
 
-            if style_name.startswith('Heading 1') or (text.startswith('PHẦN') and len(text) < 100):
+            if style_name.startswith('Heading 1') or (text.startswith('CHƯƠNG') or text.startswith('MỤC LỤC') or text.startswith('DANH MỤC')):
                 html_parts.append(f"<h1>{escape_html(text)}</h1>\n")
                 md_parts.append(f"\n# {text}\n")
             elif style_name.startswith('Heading 2') or (len(text) > 2 and text[0].isdigit() and text[1] == '.' and len(text) < 100):
                 html_parts.append(f"<h2>{escape_html(text)}</h2>\n")
                 md_parts.append(f"\n## {text}\n")
-            elif style_name.startswith('Heading 3') or (len(text) > 4 and text[:2] in ['Bả', 'Ch', '2.', '3.', '4.', '5.'] and len(text) < 120 and ('Bảng' in text or 'Hình' in text or '2.' in text)):
+            elif style_name.startswith('Heading 3') or (len(text) > 4 and text[:2] in ['Bả', 'Ch', '2.', '3.', '4.', '5.', '6.'] and len(text) < 120 and ('Bảng' in text or 'Hình' in text or '2.' in text or '5.' in text or '6.' in text)):
                 html_parts.append(f"<h3>{escape_html(text)}</h3>\n")
                 md_parts.append(f"\n### {text}\n")
             elif "NGUYÊN TẮC CỐT LÕI (HUMAN-IN-THE-LOOP)" in text:
@@ -236,9 +269,21 @@ def run_export():
                 md_parts.append(f"\n{text}\n")
 
         elif isinstance(block, Table):
-            # Render HTML Table
+            # Check if this table is a screenshot placeholder
+            if len(block.rows) == 1 and len(block.columns) == 1 and "DÁN ẢNH CHỤP MÀN HÌNH" in block.rows[0].cells[0].text:
+                full_cell_text = block.rows[0].cells[0].text.strip()
+                desc_text = full_cell_text.replace("📷 [DÁN ẢNH CHỤP MÀN HÌNH TẠI ĐÂY]", "").strip()
+                html_parts.append(f"""
+<div class="screenshot-placeholder">
+    <div class="placeholder-icon">📷 [DÁN ẢNH CHỤP MÀN HÌNH TẠI ĐÂY]</div>
+    <div class="placeholder-desc">{escape_html(desc_text)}</div>
+</div>
+""")
+                md_parts.append(f"\n> 📷 **[DÁN ẢNH CHỤP MÀN HÌNH TẠI ĐÂY]**  \n> *{desc_text}*\n")
+                continue
+
+            # Standard HTML/MD Table
             html_table = ["<table>\n"]
-            # Render MD Table
             md_table = []
 
             for r_idx, row in enumerate(block.rows):
