@@ -56,20 +56,23 @@
         <!-- TAB 1: APPLICATIONS -->
         <section id="tab-applications" class="tab-content">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header" style="flex-wrap:wrap; gap:0.75rem;">
               <h3 class="card-title">📋 Hồ Sơ Ứng Tuyển & Phễu Xử Lý Tuần Tự</h3>
               <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
-                <input type="text" id="searchCandidateInput" class="form-control" placeholder="🔍 Tìm kiếm ứng viên, email, vị trí..." style="min-width:210px; padding:0.35rem 0.6rem; font-size:0.85rem;" />
-                <select id="filterJob" class="form-control" style="min-width:240px; padding:0.35rem; font-size:0.85rem;">
+                <input type="text" id="searchCandidateInput" class="form-control" placeholder="🔍 Tìm ứng viên, email, vị trí..." style="min-width:210px; padding:0.4rem 0.65rem; font-size:0.85rem;" />
+                <select id="filterJob" class="form-control" style="min-width:220px; padding:0.4rem 0.6rem; font-size:0.85rem;">
                   <option value="">-- Tất cả tin tuyển dụng --</option>
                 </select>
-                <select id="filterStatus" class="form-control" style="width:160px; padding:0.35rem; font-size:0.85rem;">
+                <select id="filterStatus" class="form-control" style="width:160px; padding:0.4rem 0.6rem; font-size:0.85rem;">
                   <option value="">Tất cả trạng thái</option>
                   <option value="MOI">Mới (MOI)</option>
                   <option value="DANG_PHONG_VAN">Đang phỏng vấn</option>
                   <option value="DAT">Trúng tuyển (DAT)</option>
                   <option value="KHONG_DAT">Không đạt</option>
                 </select>
+                <button type="button" id="btnResetAppFilters" class="btn btn-secondary btn-sm" title="Đặt lại bộ lọc" style="padding:0.4rem 0.65rem; font-size:0.82rem;">
+                  ↺ Xóa Lọc
+                </button>
               </div>
             </div>
 
@@ -178,6 +181,9 @@
         <h3 class="modal-title">🔄 Cập Nhật Trạng Thái Ứng Tuyển Tuần Tự</h3>
         <button class="modal-close" onclick="closeModal('changeStatusModal')">&times;</button>
       </div>
+      <div id="changeStatusCandidateSummary" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); padding:0.75rem 1rem; border-radius:8px; margin-bottom:1rem; font-size:0.88rem;">
+        <!-- Điền tự động bởi JS -->
+      </div>
       <form id="changeStatusForm">
         <input type="hidden" id="changeStatusAppId" />
         <div class="form-group">
@@ -192,7 +198,7 @@
           <label class="form-label">Lý do / Ghi chú (Lưu vào SuKienTrangThai):</label>
           <textarea id="statusReason" class="form-control" rows="2" placeholder="Nhập lý do cập nhật..." required></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Xác Nhận Cập Nhật</button>
+        <button type="submit" id="btnSubmitChangeStatus" class="btn btn-primary" style="width:100%;">Xác Nhận Cập Nhật</button>
       </form>
     </div>
   </div>
@@ -203,6 +209,9 @@
       <div class="modal-header">
         <h3 class="modal-title">📅 Lên Lịch Phỏng Vấn Ứng Viên</h3>
         <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+      </div>
+      <div id="scheduleCandidateSummary" style="background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); padding:0.75rem 1rem; border-radius:8px; margin-bottom:1rem; font-size:0.88rem;">
+        <!-- Điền tự động bởi JS -->
       </div>
       <form id="scheduleForm">
         <input type="hidden" id="scheduleAppId" />
@@ -228,7 +237,7 @@
         <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">
           ℹ️ Khi lên lịch, hệ thống sẽ tự động cập nhật trạng thái ứng viên sang <strong>DANG_PHONG_VAN</strong> và gửi email thông báo.
         </p>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Tạo Lịch & Gửi Thư Mời</button>
+        <button type="submit" id="btnSubmitSchedule" class="btn btn-primary" style="width:100%;">Tạo Lịch & Gửi Thư Mời</button>
       </form>
     </div>
   </div>

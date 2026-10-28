@@ -74,6 +74,43 @@ document.addEventListener('DOMContentLoaded', async () => {
   const searchInput = document.getElementById('searchCandidateInput');
   if (searchInput) searchInput.addEventListener('input', () => renderApplicationsTable());
 
+  // Nút xóa bộ lọc
+  const btnReset = document.getElementById('btnResetAppFilters');
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      if (document.getElementById('searchCandidateInput')) document.getElementById('searchCandidateInput').value = '';
+      if (document.getElementById('filterJob')) document.getElementById('filterJob').value = '';
+      if (document.getElementById('filterStatus')) document.getElementById('filterStatus').value = '';
+      renderApplicationsTable();
+    });
+  }
+
+  // Chuyển đổi gợi ý địa điểm / link khi đổi hình thức phỏng vấn ONLINE / OFFLINE
+  const schedMode = document.getElementById('schedMode');
+  if (schedMode) {
+    schedMode.addEventListener('change', (e) => {
+      const locInput = document.getElementById('schedLocation');
+      const notesInput = document.getElementById('schedNotes');
+      if (e.target.value === 'ONLINE') {
+        if (locInput) {
+          locInput.value = 'https://meet.google.com/recruitment-interview';
+          locInput.placeholder = 'Ví dụ: https://meet.google.com/... hoặc link Zoom';
+        }
+        if (notesInput) {
+          notesInput.value = 'Vui lòng chuẩn bị đường truyền internet ổn định, mở webcam và vào phòng họp trước 5 phút.';
+        }
+      } else {
+        if (locInput) {
+          locInput.value = 'Phòng họp 302, Tầng 3, Trụ sở Công ty';
+          locInput.placeholder = 'Ví dụ: Tầng 3, Tòa nhà ABC, 123 Đường XYZ';
+        }
+        if (notesInput) {
+          notesInput.value = 'Vui lòng mang theo bản in CV, CCCD/CMND và có mặt trước 10 phút để làm thủ tục tiếp đón.';
+        }
+      }
+    });
+  }
+
   // Xử lý Form Chuyển Trạng Thái Tuần Tự
   document.getElementById('changeStatusForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -404,30 +441,97 @@ window.openChangeStatusModal = function(appId) {
   if (!app) return;
 
   document.getElementById('changeStatusAppId').value = appId;
-  document.getElementById('currentStatusDisplay').innerText = app.trang_thai;
+
+  // Hiển thị tóm tắt thông tin ứng viên
+  const summaryEl = document.getElementById('changeStatusCandidateSummary');
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div style="font-weight:700; color:#fff;">👤 ${app.ho_ten_ung_vien} <span style="font-size:0.8rem; color:var(--text-muted);">(${app.email_ung_vien} | ${app.so_dien_thoai || 'Chưa có SĐT'})</span></div>
+      <div style="color:#a5b4fc; font-size:0.82rem; margin-top:0.3rem;">💼 Tin ứng tuyển: <strong>${app.tieu_de_tin}</strong></div>
+    `;
+  }
+
+  let badgeClass = 'badge-moi';
+  if (app.trang_thai === 'DANG_PHONG_VAN') badgeClass = 'badge-pv';
+  else if (app.trang_thai === 'DAT') badgeClass = 'badge-dat';
+  else if (app.trang_thai === 'KHONG_DAT') badgeClass = 'badge-khongdat';
+
+  document.getElementById('currentStatusDisplay').innerHTML = `
+    <span class="badge ${badgeClass}" style="font-size:0.85rem; padding:0.25rem 0.65rem;">${app.trang_thai}</span>
+  `;
   
   const select = document.getElementById('newStatusSelect');
+  const reasonInput = document.getElementById('statusReason');
+  const submitBtn = document.getElementById('btnSubmitChangeStatus');
+  if (submitBtn) submitBtn.disabled = false;
   select.innerHTML = '';
 
   if (app.trang_thai === 'MOI') {
     select.innerHTML = `
-      <option value="DANG_PHONG_VAN">Chuyển sang: ĐANG PHỎNG VẤN (DANG_PHONG_VAN)</option>
-      <option value="KHONG_DAT">Chuyển sang: KHÔNG ĐẠT (Loại hồ sơ)</option>
+      <option value="DANG_PHONG_VAN">📅 Chuyển sang: ĐANG PHỎNG VẤN (DANG_PHONG_VAN)</option>
+      <option value="KHONG_DAT">❌ Chuyển sang: KHÔNG ĐẠT (Loại hồ sơ)</option>
     `;
+    reasonInput.value = 'Hồ sơ đạt tiêu chuẩn sơ loại, chuyển sang giai đoạn phỏng vấn chuyên môn.';
   } else if (app.trang_thai === 'DANG_PHONG_VAN') {
     select.innerHTML = `
-      <option value="DAT">Chuyển sang: ĐẠT TUYỂN DỤNG (DAT)</option>
-      <option value="KHONG_DAT">Chuyển sang: KHÔNG ĐẠT (KHONG_DAT)</option>
+      <option value="DAT">🎯 Chuyển sang: ĐẠT TUYỂN DỤNG (DAT - Trúng tuyển)</option>
+      <option value="KHONG_DAT">❌ Chuyển sang: KHÔNG ĐẠT (KHONG_DAT)</option>
     `;
-  } else {
-    select.innerHTML = `<option value="">(Hồ sơ đã ở trạng thái kết thúc)</option>`;
+    reasonInput.value = 'Ứng viên hoàn thành phỏng vấn, đề xuất tuyển dụng chính thức.';
+  } else if (app.trang_thai === 'DAT') {
+    select.innerHTML = `
+      <option value="DANG_PHONG_VAN">🔄 Mở lại: ĐANG PHỎNG VẤN (Phỏng vấn bổ sung/đàm phán offer)</option>
+      <option value="KHONG_DAT">❌ Hủy kết quả: KHÔNG ĐẠT (Ứng viên từ chối offer / không đạt thử việc)</option>
+    `;
+    reasonInput.value = 'Điều chỉnh lại trạng thái ứng viên theo quyết định tuyển dụng mới.';
+  } else if (app.trang_thai === 'KHONG_DAT') {
+    select.innerHTML = `
+      <option value="MOI">🔄 Xem xét lại: MỚI (MOI - Đưa về hàng đợi sàng lọc)</option>
+      <option value="DANG_PHONG_VAN">📅 Tái phỏng vấn: ĐANG PHỎNG VẤN (DANG_PHONG_VAN)</option>
+    `;
+    reasonInput.value = 'Tái kích hoạt hồ sơ ứng viên để xem xét lại cơ hội việc làm.';
   }
 
   document.getElementById('changeStatusModal').classList.add('active');
 };
 
 window.openScheduleModal = function(appId) {
+  const app = currentApplications.find(a => a.id === appId);
+  if (!app) return;
+
   document.getElementById('scheduleAppId').value = appId;
+
+  // Hiển thị tóm tắt thông tin ứng viên
+  const summaryEl = document.getElementById('scheduleCandidateSummary');
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div style="font-weight:700; color:#fff;">👤 ${app.ho_ten_ung_vien} <span style="font-size:0.8rem; color:var(--text-muted);">(${app.email_ung_vien} | ${app.so_dien_thoai || 'Chưa có SĐT'})</span></div>
+      <div style="color:#a5b4fc; font-size:0.82rem; margin-top:0.3rem;">💼 Tin ứng tuyển: <strong>${app.tieu_de_tin}</strong></div>
+    `;
+  }
+
+  // Đặt thời gian mặc định là 09:00 sáng ngày mai
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const pad = (n) => String(n).padStart(2, '0');
+  const defaultIso = `${tomorrow.getFullYear()}-${pad(tomorrow.getMonth() + 1)}-${pad(tomorrow.getDate())}T09:00`;
+  
+  const timeInput = document.getElementById('schedStartTime');
+  if (timeInput) timeInput.value = defaultIso;
+
+  const schedMode = document.getElementById('schedMode');
+  const locInput = document.getElementById('schedLocation');
+  const notesInput = document.getElementById('schedNotes');
+
+  if (schedMode) schedMode.value = 'ONLINE';
+  if (locInput) {
+    locInput.value = 'https://meet.google.com/recruitment-interview';
+    locInput.placeholder = 'Ví dụ: https://meet.google.com/... hoặc link Zoom';
+  }
+  if (notesInput) {
+    notesInput.value = 'Vui lòng chuẩn bị đường truyền internet ổn định, mở webcam và vào phòng họp trước 5 phút.';
+  }
+
   document.getElementById('scheduleModal').classList.add('active');
 };
 

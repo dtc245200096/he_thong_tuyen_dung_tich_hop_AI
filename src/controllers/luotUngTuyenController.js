@@ -15,8 +15,8 @@ import DichVuEmail from '../services/DichVuEmail.js';
 const VALID_STATUS_TRANSITIONS = {
   'MOI': ['DANG_PHONG_VAN', 'KHONG_DAT'],
   'DANG_PHONG_VAN': ['DAT', 'KHONG_DAT'],
-  'DAT': [], // Trạng thái kết thúc thành công
-  'KHONG_DAT': [] // Trạng thái kết thúc không thành công
+  'DAT': ['DANG_PHONG_VAN', 'KHONG_DAT'], // Cho phép mở lại phỏng vấn bổ sung hoặc hủy trúng tuyển
+  'KHONG_DAT': ['MOI', 'DANG_PHONG_VAN'] // Cho phép xem xét lại hồ sơ hoặc tái phỏng vấn
 };
 
 /**

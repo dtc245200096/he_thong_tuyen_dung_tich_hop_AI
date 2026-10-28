@@ -20,14 +20,16 @@ export async function layDanhSachLichPhongVan(req, res) {
       .map(a => a.id);
     list = list.filter(l => myAppIds.includes(l.luot_ung_tuyen_id));
   } else if (user && user.vai_tro === 'RECRUITER') {
-    // Recruiter chỉ xem lịch của các ứng viên nộp vào tin mình phụ trách
-    const myTinIds = store.TinTuyenDung
-      .filter(t => t.nguoi_phu_trach_id === user.id)
-      .map(t => t.id);
-    const myAppIds = store.LuotUngTuyen
-      .filter(a => myTinIds.includes(a.tin_tuyen_dung_id))
-      .map(a => a.id);
-    list = list.filter(l => myAppIds.includes(l.luot_ung_tuyen_id) || l.nguoi_phong_van_id === user.id);
+    // Nếu có cờ scope_only thì lọc theo tin mình phụ trách, ngược lại hiển thị đầy đủ để bao quát
+    if (req.query && req.query.scope_only === 'true') {
+      const myTinIds = store.TinTuyenDung
+        .filter(t => t.nguoi_phu_trach_id === user.id)
+        .map(t => t.id);
+      const myAppIds = store.LuotUngTuyen
+        .filter(a => myTinIds.includes(a.tin_tuyen_dung_id))
+        .map(a => a.id);
+      list = list.filter(l => myAppIds.includes(l.luot_ung_tuyen_id) || l.nguoi_phong_van_id === user.id);
+    }
   }
 
   // Kết hợp thông tin ứng viên và tin tuyển dụng

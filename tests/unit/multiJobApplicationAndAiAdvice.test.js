@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { nopDonUngTuyen, layDanhSachUngTuyen } from '../../src/controllers/luotUngTuyenController.js';
+import { nopDonUngTuyen, layDanhSachUngTuyen, chuyenTrangThai } from '../../src/controllers/luotUngTuyenController.js';
+import { layDanhSachLichPhongVan } from '../../src/controllers/lichPhongVanController.js';
 import DichVuAI from '../../src/services/DichVuAI.js';
 import { getStore } from '../../src/config/database.js';
 
@@ -196,5 +197,96 @@ test('UNIT TEST: Ứng viên nộp nhiều CV vào nhiều tin tuyển dụng & 
     assert.ok(res.cau_tra_loi.includes('lịch hẹn phỏng vấn'));
     // Lịch của Phạm Quốc An trong database là ONLINE -> Phải có nhắc nhở riêng Online
     assert.ok(res.cau_tra_loi.includes('đường truyền mạng') || res.cau_tra_loi.includes('Online'));
+  });
+
+  await t.test('7. Form Chuyển Trạng Thái: Cho phép chuyển từ DAT sang DANG_PHONG_VAN hoặc KHONG_DAT khi cần điều chỉnh', async () => {
+    // Tạo lượt ứng tuyển giả lập có trạng thái DAT
+    const testAppDat = {
+      id: 'app_test_dat_transition',
+      tin_tuyen_dung_id: job1Id,
+      ung_vien_id: testCandidateId,
+      ho_so_cv_id: cv1Id,
+      nguon_id: 's1000000-0000-0000-0000-000000000003',
+      trang_thai: 'DAT',
+      diem_danh_gia_tong: null,
+      ghi_chu: 'Hồ sơ đạt',
+      created_at: new Date(),
+      updated_at: new Date(),
+      deleted_at: null
+    };
+    store.LuotUngTuyen.push(testAppDat);
+
+    const { req, res } = createMockReqRes(
+      {
+        trang_thai_moi: 'DANG_PHONG_VAN',
+        ly_do: 'Mở lại phỏng vấn bổ sung vòng văn hóa.'
+      },
+      { id: 'a0000000-0000-0000-0000-000000000002', vai_tro: 'RECRUITER' }
+    );
+    req.params = { id: testAppDat.id };
+
+    await chuyenTrangThai(req, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.jsonData.success, true);
+    assert.equal(testAppDat.trang_thai, 'DANG_PHONG_VAN');
+  });
+
+  await t.test('8. Form Chuyển Trạng Thái: Cho phép tái kích hoạt hồ sơ từ KHONG_DAT về MOI hoặc DANG_PHONG_VAN', async () => {
+    const testAppKhongDat = {
+      id: 'app_test_khongdat_transition',
+      tin_tuyen_dung_id: job1Id,
+      ung_vien_id: testCandidateId,
+      ho_so_cv_id: cv1Id,
+      nguon_id: 's1000000-0000-0000-0000-000000000003',
+      trang_thai: 'KHONG_DAT',
+      diem_danh_gia_tong: null,
+      ghi_chu: 'Hồ sơ tạm loại',
+      created_at: new Date(),
+      updated_at: new Date(),
+      deleted_at: null
+    };
+    store.LuotUngTuyen.push(testAppKhongDat);
+
+    const { req, res } = createMockReqRes(
+      {
+        trang_thai_moi: 'MOI',
+        ly_do: 'Xem xét lại hồ sơ cho đợt tuyển mới.'
+      },
+      { id: 'a0000000-0000-0000-0000-000000000002', vai_tro: 'RECRUITER' }
+    );
+    req.params = { id: testAppKhongDat.id };
+
+    await chuyenTrangThai(req, res);
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.jsonData.success, true);
+    assert.equal(testAppKhongDat.trang_thai, 'MOI');
+  });
+
+  await t.test('9. Form Chuyển Trạng Thái: Vẫn chặn nhảy cóc bất hợp lệ (MOI -> DAT)', async () => {
+    const testAppMoi = {
+      id: 'app_test_moi_invalid',
+      tin_tuyen_dung_id: job1Id,
+      ung_vien_id: testCandidateId,
+      ho_so_cv_id: cv1Id,
+      nguon_id: 's1000000-0000-0000-0000-000000000003',
+      trang_thai: 'MOI',
+      created_at: new Date(),
+      updated_at: new Date(),
+      deleted_at: null
+    };
+    store.LuotUngTuyen.push(testAppMoi);
+
+    const { req, res } = createMockReqRes(
+      {
+        trang_thai_moi: 'DAT',
+        ly_do: 'Nhảy cóc'
+      },
+      { id: 'a0000000-0000-0000-0000-000000000002', vai_tro: 'RECRUITER' }
+    );
+    req.params = { id: testAppMoi.id };
+
+    await chuyenTrangThai(req, res);
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.jsonData.error, 'INVALID_STATUS_TRANSITION');
   });
 });

@@ -87,16 +87,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Khởi tạo Trợ lý AI Hỏi Đáp cho Ứng viên
   initCandidateAiChat(user);
 
-  // Xử lý nộp đơn
+  // Xử lý nộp đơn ứng tuyển
   document.getElementById('applyForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const jobId = document.getElementById('applyJobId').value;
     const notes = document.getElementById('applyNotes').value;
+    const submitBtn = document.getElementById('btnSubmitApply');
+    const originalBtnText = submitBtn.innerHTML;
 
     if (!uploadedCvId) {
-      showToast('Vui lòng tải lên tệp tin CV trước khi nộp.', 'error');
+      showToast('Vui lòng chọn hoặc tải lên tệp tin CV trước khi nộp.', 'error');
       return;
     }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⚡ Đang nộp hồ sơ...';
 
     try {
       const res = await fetchWithAuth('/luot-ung-tuyen', {
@@ -113,11 +118,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.closeModal('applyModal');
         await loadMyApplications();
         // Chuyển sang tab hồ sơ của tôi
-        document.querySelector('.nav-link[data-tab="my-applications"]').click();
+        const myAppTab = document.querySelector('.nav-link[data-tab="my-applications"]');
+        if (myAppTab) myAppTab.click();
       }
     } catch (err) {
-      // Bắt lỗi chống nộp trùng (409 Conflict)
-      showToast(err.message, 'error');
+      // Bắt lỗi chống nộp trùng (409 Conflict) hoặc lỗi hệ thống
+      showToast(err.message, 'warning');
+      const statusDiv = document.getElementById('fileUploadStatus');
+      if (statusDiv) {
+        statusDiv.innerHTML = `<span style="color:#f87171;">⚠️ ${err.message}</span>`;
+      }
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
     }
   });
 });
@@ -177,18 +190,24 @@ window.openApplyModal = async function(jobId, jobTitle, jobPos) {
       });
       if (selectExistingCv) {
         selectExistingCv.innerHTML = optionsHtml;
-        selectExistingCv.value = '';
+        
+        // Tự động chọn CV mới nhất có sẵn để ứng viên có thể nộp ngay thuận tiện
+        const latestCv = res.data[0];
+        selectExistingCv.value = latestCv.id;
+        uploadedCvId = latestCv.id;
+        document.getElementById('btnSubmitApply').disabled = false;
+        document.getElementById('fileUploadStatus').innerHTML = `<span style="color:#34d399;">✔ Đang sử dụng CV: <strong>${latestCv.ten_file}</strong> (Phiên bản ${latestCv.phien_ban || 1})</span>`;
 
         selectExistingCv.onchange = function() {
           if (this.value) {
             uploadedCvId = this.value;
             document.getElementById('btnSubmitApply').disabled = false;
             const chosen = res.data.find(c => c.id === this.value);
-            document.getElementById('fileUploadStatus').innerHTML = `<span style="color:#34d399;">✔ Đã chọn CV có sẵn: <strong>${chosen ? chosen.ten_file : ''}</strong></span>`;
+            document.getElementById('fileUploadStatus').innerHTML = `<span style="color:#34d399;">✔ Đang chọn CV có sẵn: <strong>${chosen ? chosen.ten_file : ''}</strong></span>`;
           } else {
             uploadedCvId = null;
             document.getElementById('btnSubmitApply').disabled = true;
-            document.getElementById('fileUploadStatus').innerHTML = '';
+            document.getElementById('fileUploadStatus').innerHTML = '<span style="color:#a5b4fc;">ℹ️ Vui lòng tải file CV mới qua khung bên dưới.</span>';
           }
         };
       }
