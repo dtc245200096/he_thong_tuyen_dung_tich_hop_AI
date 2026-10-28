@@ -192,10 +192,18 @@
 
       <form id="applyForm">
         <input type="hidden" id="applyJobId" />
+
+        <!-- Lựa chọn CV có sẵn hoặc tải CV mới -->
+        <div class="form-group" id="existingCvSection" style="display:none; margin-bottom:1rem;">
+          <label class="form-label">Chọn CV Đã Tải Lên Trước Đó (Hoặc tải CV mới bên dưới):</label>
+          <select id="selectExistingCv" class="form-control" style="font-size:0.88rem; padding:0.4rem;">
+            <option value="">-- Tải lên tệp CV mới phía dưới --</option>
+          </select>
+        </div>
         
         <!-- Drag and Drop Upload Zone -->
         <div class="form-group">
-          <label class="form-label">Tải Lên File CV Của Bạn (PDF hoặc DOCX, Tối Đa 10 MiB)</label>
+          <label class="form-label" id="uploadCvLabel">Tải Lên File CV Của Bạn (PDF hoặc DOCX, Tối Đa 10 MiB)</label>
           <div class="dropzone" id="cvDropzone">
             <div class="dropzone-icon">📁</div>
             <div class="dropzone-title" id="dropzoneText">Kéo thả file CV vào đây hoặc bấm để chọn tệp</div>

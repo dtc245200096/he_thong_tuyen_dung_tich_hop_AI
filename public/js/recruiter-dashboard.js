@@ -64,10 +64,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadMyJobs();
   await loadInterviews();
 
-  // Bộ lọc trạng thái
-  document.getElementById('filterStatus').addEventListener('change', (e) => {
-    renderApplicationsTable(e.target.value);
-  });
+  // Bộ lọc danh sách ứng viên (Trạng thái, Tin tuyển dụng, Tìm kiếm từ khóa)
+  const filterStatus = document.getElementById('filterStatus');
+  if (filterStatus) filterStatus.addEventListener('change', () => renderApplicationsTable());
+
+  const filterJob = document.getElementById('filterJob');
+  if (filterJob) filterJob.addEventListener('change', () => renderApplicationsTable());
+
+  const searchInput = document.getElementById('searchCandidateInput');
+  if (searchInput) searchInput.addEventListener('input', () => renderApplicationsTable());
 
   // Xử lý Form Chuyển Trạng Thái Tuần Tự
   document.getElementById('changeStatusForm').addEventListener('submit', async (e) => {
@@ -208,11 +213,32 @@ window.openCreateJobModal = function() {
   document.getElementById('createJobModal').classList.add('active');
 };
 
+async function populateJobFilter() {
+  const filterJob = document.getElementById('filterJob');
+  if (!filterJob) return;
+
+  try {
+    const res = await fetchWithAuth('/tin-tuyen-dung');
+    if (res.success && Array.isArray(res.data)) {
+      const currentVal = filterJob.value;
+      let optionsHtml = '<option value="">-- Tất cả tin tuyển dụng --</option>';
+      res.data.forEach(j => {
+        optionsHtml += `<option value="${j.id}">${j.tieu_de}</option>`;
+      });
+      filterJob.innerHTML = optionsHtml;
+      if (currentVal) filterJob.value = currentVal;
+    }
+  } catch (err) {
+    console.error('Lỗi nạp danh sách tin tuyển dụng cho bộ lọc:', err);
+  }
+}
+
 async function loadApplications() {
   try {
     const res = await fetchWithAuth('/luot-ung-tuyen');
     if (res.success) {
       currentApplications = res.data;
+      await populateJobFilter();
       renderApplicationsTable();
     }
   } catch (err) {
@@ -220,16 +246,34 @@ async function loadApplications() {
   }
 }
 
-function renderApplicationsTable(filter = '') {
+function renderApplicationsTable() {
   const tbody = document.getElementById('applicationsTableBody');
+  const statusFilter = document.getElementById('filterStatus')?.value || '';
+  const jobFilter = document.getElementById('filterJob')?.value || '';
+  const keyword = (document.getElementById('searchCandidateInput')?.value || '').toLowerCase().trim();
+
   let list = currentApplications;
 
-  if (filter) {
-    list = list.filter(a => a.trang_thai === filter);
+  if (statusFilter) {
+    list = list.filter(a => a.trang_thai === statusFilter);
+  }
+
+  if (jobFilter) {
+    list = list.filter(a => a.tin_tuyen_dung_id === jobFilter);
+  }
+
+  if (keyword) {
+    list = list.filter(a => 
+      (a.ho_ten_ung_vien && a.ho_ten_ung_vien.toLowerCase().includes(keyword)) ||
+      (a.email_ung_vien && a.email_ung_vien.toLowerCase().includes(keyword)) ||
+      (a.tieu_de_tin && a.tieu_de_tin.toLowerCase().includes(keyword)) ||
+      (a.ten_file_cv && a.ten_file_cv.toLowerCase().includes(keyword)) ||
+      (a.so_dien_thoai && a.so_dien_thoai.includes(keyword))
+    );
   }
 
   if (!list.length) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">Không có hồ sơ nào.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:1.5rem; color:var(--text-muted);">Không tìm thấy hồ sơ ứng viên nào phù hợp.</td></tr>`;
     return;
   }
 
@@ -246,15 +290,18 @@ function renderApplicationsTable(filter = '') {
     return `
       <tr>
         <td>
-          <div style="font-weight:700;">${app.ho_ten_ung_vien}</div>
+          <div style="font-weight:700; color:#f3f4f6;">${app.ho_ten_ung_vien}</div>
           <div style="font-size:0.8rem; color:var(--text-muted);">${app.email_ung_vien} | ${app.so_dien_thoai}</div>
         </td>
-        <td>${app.tieu_de_tin}</td>
+        <td>
+          <div style="font-weight:600; color:#c7d2fe;">${app.tieu_de_tin}</div>
+          <div style="font-size:0.75rem; color:var(--text-muted);">Ngày nộp: ${app.created_at ? formatDate(app.created_at) : 'N/A'}</div>
+        </td>
         <td>${aiScore}</td>
         <td><span class="badge ${badgeClass}">${app.trang_thai}</span></td>
         <td>
-          <a href="${app.duong_dan_cv || '#'}" target="_blank" style="color:#818cf8; text-decoration:none; font-size:0.85rem;">
-            📄 ${app.ten_file_cv}
+          <a href="${app.duong_dan_cv || '#'}" target="_blank" style="color:#818cf8; text-decoration:none; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.25rem;">
+            📄 <span>${app.ten_file_cv}</span>
           </a>
         </td>
         <td>
@@ -397,9 +444,12 @@ async function loadMyJobs() {
           <td>${job.dia_diem}</td>
           <td><span class="badge ${job.trang_thai === 'DANG_TUYEN' ? 'badge-dat' : 'badge-khongdat'}">${job.trang_thai}</span></td>
           <td>
-            ${job.trang_thai === 'DANG_TUYEN' 
-              ? `<button class="btn btn-danger btn-sm" onclick="closeJob('${job.id}')">Đóng Tin</button>` 
-              : '<span style="color:var(--text-muted);">Đã đóng</span>'}
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" onclick="viewJobApplications('${job.id}')">📋 Xem Ứng Viên</button>
+              ${job.trang_thai === 'DANG_TUYEN' 
+                ? `<button class="btn btn-danger btn-sm" onclick="closeJob('${job.id}')">Đóng Tin</button>` 
+                : '<span style="color:var(--text-muted); font-size:0.85rem; align-self:center;">Đã đóng</span>'}
+            </div>
           </td>
         </tr>
       `).join('');
@@ -410,6 +460,18 @@ async function loadMyJobs() {
     console.error('Lỗi tải tin tuyển dụng:', err);
   }
 }
+
+window.viewJobApplications = function(jobId) {
+  // Chuyển sang Tab Danh Sách Ứng Viên
+  const appTab = document.querySelector('.nav-link[data-tab="applications"]');
+  if (appTab) appTab.click();
+
+  const filterJob = document.getElementById('filterJob');
+  if (filterJob) {
+    filterJob.value = jobId;
+    renderApplicationsTable();
+  }
+};
 
 window.closeJob = async function(jobId) {
   if (!confirm('Bạn có chắc chắn muốn đóng tin tuyển dụng này?')) return;

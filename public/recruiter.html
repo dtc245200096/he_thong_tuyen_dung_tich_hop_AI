@@ -58,8 +58,12 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">📋 Hồ Sơ Ứng Tuyển & Phễu Xử Lý Tuần Tự</h3>
-              <div style="display:flex; gap:0.5rem;">
-                <select id="filterStatus" class="form-control" style="width:160px; padding:0.35rem;">
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
+                <input type="text" id="searchCandidateInput" class="form-control" placeholder="🔍 Tìm kiếm ứng viên, email, vị trí..." style="min-width:210px; padding:0.35rem 0.6rem; font-size:0.85rem;" />
+                <select id="filterJob" class="form-control" style="min-width:240px; padding:0.35rem; font-size:0.85rem;">
+                  <option value="">-- Tất cả tin tuyển dụng --</option>
+                </select>
+                <select id="filterStatus" class="form-control" style="width:160px; padding:0.35rem; font-size:0.85rem;">
                   <option value="">Tất cả trạng thái</option>
                   <option value="MOI">Mới (MOI)</option>
                   <option value="DANG_PHONG_VAN">Đang phỏng vấn</option>

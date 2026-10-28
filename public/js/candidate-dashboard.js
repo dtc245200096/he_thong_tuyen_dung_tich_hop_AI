@@ -154,7 +154,7 @@ async function loadJobListings() {
   }
 }
 
-window.openApplyModal = function(jobId, jobTitle, jobPos) {
+window.openApplyModal = async function(jobId, jobTitle, jobPos) {
   uploadedCvId = null;
   document.getElementById('applyJobId').value = jobId;
   document.getElementById('applyJobTitle').innerText = jobTitle;
@@ -163,6 +163,41 @@ window.openApplyModal = function(jobId, jobTitle, jobPos) {
   document.getElementById('fileUploadStatus').innerHTML = '';
   document.getElementById('btnSubmitApply').disabled = true;
   document.getElementById('applyNotes').value = '';
+
+  const selectExistingCv = document.getElementById('selectExistingCv');
+  const existingCvSection = document.getElementById('existingCvSection');
+
+  try {
+    const res = await fetchWithAuth('/ho-so-cv');
+    if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+      if (existingCvSection) existingCvSection.style.display = 'block';
+      let optionsHtml = '<option value="">-- Tải lên tệp CV mới phía dưới --</option>';
+      res.data.forEach(c => {
+        optionsHtml += `<option value="${c.id}">📄 ${c.ten_file} (Phiên bản ${c.phien_ban || 1})</option>`;
+      });
+      if (selectExistingCv) {
+        selectExistingCv.innerHTML = optionsHtml;
+        selectExistingCv.value = '';
+
+        selectExistingCv.onchange = function() {
+          if (this.value) {
+            uploadedCvId = this.value;
+            document.getElementById('btnSubmitApply').disabled = false;
+            const chosen = res.data.find(c => c.id === this.value);
+            document.getElementById('fileUploadStatus').innerHTML = `<span style="color:#34d399;">✔ Đã chọn CV có sẵn: <strong>${chosen ? chosen.ten_file : ''}</strong></span>`;
+          } else {
+            uploadedCvId = null;
+            document.getElementById('btnSubmitApply').disabled = true;
+            document.getElementById('fileUploadStatus').innerHTML = '';
+          }
+        };
+      }
+    } else {
+      if (existingCvSection) existingCvSection.style.display = 'none';
+    }
+  } catch (err) {
+    if (existingCvSection) existingCvSection.style.display = 'none';
+  }
 
   document.getElementById('applyModal').classList.add('active');
 };
@@ -233,6 +268,8 @@ function initCvDropzone() {
       const data = await res.json();
       if (data.success) {
         uploadedCvId = data.data.id;
+        const selectExisting = document.getElementById('selectExistingCv');
+        if (selectExisting) selectExisting.value = '';
         document.getElementById('dropzoneText').innerText = `✅ Đã chọn: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
         statusDiv.innerHTML = `<span style="color:#34d399;">✔ Đã tải lên và trích xuất thành công ${data.data.do_dai_van_ban} ký tự.</span>`;
         submitBtn.disabled = false;

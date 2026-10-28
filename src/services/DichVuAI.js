@@ -1634,18 +1634,57 @@ FROM TaiKhoan LIMIT 1;`;
         `  - Điền ghi chú/thư giới thiệu ngắn (nếu có) và nhấn **"Xác Nhận Nộp Hồ Sơ"**.\n\n` +
         `✨ Sau khi nộp thành công, hồ sơ của bạn sẽ chuyển sang trạng thái **Tiếp nhận (MOI)** và bạn có thể theo dõi tiến độ tại tab **"Hồ Sơ Của Tôi"**.`;
     }
+    // Hướng dẫn chuẩn bị phỏng vấn (Tách riêng chi tiết lưu ý Online & Offline)
+    else if (/(chuẩn bị.*phỏng vấn|lưu ý.*phỏng vấn|kinh nghiệm.*phỏng vấn|mẹo.*phỏng vấn|phỏng vấn.*cần gì|phỏng vấn.*chuẩn bị gì|chuẩn bị đi phỏng vấn|chuẩn bị lịch.*phỏng vấn|phỏng vấn on.*off|phỏng vấn offline.*online)/i.test(q)) {
+      answer = `Chào ${candidateName}!\n\n` +
+        `🎯 **HƯỚNG DẪN CHUẨN BỊ PHỎNG VẤN TOÀN DIỆN (LƯU Ý RIÊNG CHO ONLINE & OFFLINE):**\n\n` +
+        `🌐 **1. ĐỐI VỚI PHỎNG VẤN TRỰC TUYẾN (ONLINE):**\n` +
+        `• **Thiết bị & Kết nối:** Chuẩn bị đường truyền mạng Internet ổn định (ưu tiên Wi-Fi mạnh hoặc mạng dây), kiểm tra trước microphone, tai nghe, webcam và ứng dụng họp (Google Meet/Zoom/Teams).\n` +
+        `• **Không gian:** Lựa chọn phòng kín yên tĩnh, hạn chế tối đa tiếng ồn, phông nền gọn gàng và đủ ánh sáng chiếu thẳng vào khuôn mặt.\n` +
+        `• **Thời gian & Tác phong:** Đăng nhập vào phòng họp trước giờ hẹn 5 - 10 phút, mặc trang phục lịch sự như khi đi làm trực tiếp.\n` +
+        `• **Tài liệu:** Mở sẵn file CV, Portfolio trên máy tính để sẵn sàng chia sẻ màn hình khi người phỏng vấn yêu cầu.\n\n` +
+        `🏢 **2. ĐỐI VỚI PHỎNG VẤN TRỰC TIẾP TẠI VĂN PHÒNG (OFFLINE):**\n` +
+        `• **Chuẩn bị đầy đủ giấy tờ:** In sẵn 2 - 3 bản CV màu chỉn chu, mang theo bản sao bằng cấp, chứng chỉ nghề nghiệp và CCCD/CMND để xuất trình tại bảo vệ/lễ tân tòa nhà.\n` +
+        `• **Sắp xếp thời gian & Lộ trình:** Tra cứu trước địa chỉ công ty, vị trí gửi xe, tính toán trừ hao kẹt xe giờ cao điểm để **có mặt trước giờ phỏng vấn từ 10 - 15 phút**.\n` +
+        `• **Trang phục & Tác phong:** Mặc trang phục công sở gọn gàng (áo sơ mi/quần âu/váy công sở), phong thái tự tin, tác phong chuyên nghiệp và chủ động chào hỏi.\n` +
+        `• **Dụng cụ hỗ trợ:** Mang theo sổ tay nhỏ và bút viết để ghi lại các thông tin trao đổi quan trọng từ người phỏng vấn.\n\n` +
+        `💡 *Chúc bạn có sự chuẩn bị chu đáo và hoàn thành xuất sắc buổi phỏng vấn!*`;
+    }
     // TEST 09: Kiểm tra lịch phỏng vấn
     else if (/(lịch phỏng vấn.*sắp tới|có lịch phỏng vấn.*nào|thời gian.*vị trí.*hình thức phỏng vấn|kiểm tra lịch phỏng vấn)/i.test(q) || (q.includes('lịch') && q.includes('phỏng vấn'))) {
       if (myInterviews.length > 0) {
+        let interviewListText = myInterviews.map((l, idx) => 
+          `**${idx + 1}. ${l.tieu_de_tin}**\n` +
+          `• ⏰ **Thời gian:** ${new Date(l.thoi_gian).toLocaleString('vi-VN')}\n` +
+          `• 📍 **Hình thức:** ${l.hinh_thuc === 'ONLINE' ? 'Trực tuyến (Online)' : 'Trực tiếp tại văn phòng (Offline)'}\n` +
+          `• 🔗 **Địa điểm / Phòng họp:** ${l.dia_diem}\n` +
+          `• 📌 **Trạng thái:** ${l.trang_thai}`
+        ).join('\n\n');
+
+        const hasOnline = myInterviews.some(l => l.hinh_thuc === 'ONLINE');
+        const hasOffline = myInterviews.some(l => l.hinh_thuc === 'OFFLINE');
+
+        let reminders = [];
+        if (hasOnline) {
+          reminders.push(
+            `🌐 **Lưu ý riêng cho buổi phỏng vấn Trực tuyến (Online):**\n` +
+            `  • Kiểm tra đường truyền mạng Internet ổn định, test trước webcam, micro và tai nghe trước 15 phút.\n` +
+            `  • Chọn không gian yên tĩnh, đủ ánh sáng và đăng nhập vào link phòng họp trước giờ hẹn 5 - 10 phút.`
+          );
+        }
+        if (hasOffline) {
+          reminders.push(
+            `🏢 **Lưu ý riêng cho buổi phỏng vấn Trực tiếp tại văn phòng (Offline):**\n` +
+            `  • Chuẩn bị đầy đủ giấy tờ bản cứng: 2-3 bản CV in màu, bằng cấp/chứng chỉ liên quan, CCCD/CMND để xuất trình tại quầy lễ tân tòa nhà.\n` +
+            `  • Sắp xếp thời gian và tra cứu trước lộ trình di chuyển, chỗ gửi xe để có mặt tại văn phòng công ty trước giờ hẹn 10 - 15 phút.\n` +
+            `  • Trang phục công sở lịch sự, phong thái tự tin, mang theo sổ tay và bút viết.`
+          );
+        }
+
         answer = `Chào ${candidateName}! Hiện bạn có **${myInterviews.length} lịch hẹn phỏng vấn** sắp tới:\n\n` +
-          myInterviews.map((l, idx) => 
-            `**${idx + 1}. ${l.tieu_de_tin}**\n` +
-            `• ⏰ **Thời gian:** ${new Date(l.thoi_gian).toLocaleString('vi-VN')}\n` +
-            `• 📍 **Hình thức:** ${l.hinh_thuc === 'ONLINE' ? 'Trực tuyến (Online)' : 'Trực tiếp tại văn phòng (Offline)'}\n` +
-            `• 🔗 **Địa điểm / Phòng họp:** ${l.dia_diem}\n` +
-            `• 📌 **Trạng thái:** ${l.trang_thai}`
-          ).join('\n\n') +
-          `\n\n💡 Bạn vui lòng chuẩn bị đường truyền mạng ổn định và có mặt trước 10 phút nhé!`;
+          interviewListText +
+          `\n\n💡 **Nhắc nhở chuẩn bị cho ứng viên:**\n` +
+          reminders.join('\n\n');
       } else {
         answer = `Chào ${candidateName}! Hiện tại bạn **chưa có lịch hẹn phỏng vấn nào** sắp tới.\n\n` +
           `Khi hồ sơ của bạn đạt tiêu chuẩn vòng sơ khảo, phòng nhân sự sẽ sắp xếp lịch phỏng vấn và gửi thông báo trực tiếp qua tài khoản kèm email cho bạn. Bạn có thể kiểm tra tab **"Lịch Phỏng Vấn"** để cập nhật nhé!`;
@@ -1751,7 +1790,7 @@ FROM TaiKhoan LIMIT 1;`;
         `• 💼 Khám phá các vị trí tuyển dụng đang mở.\n` +
         `• 📝 Tư vấn cách hoàn thiện CV và lộ trình học tập.\n` +
         `• 📂 Tra cứu tiến độ hồ sơ ứng tuyển của bạn.\n` +
-        `• 📅 Hướng dẫn chuẩn bị và nhắc lịch phỏng vấn.\n\n` +
+        `• 📅 Hướng dẫn chuẩn bị và nhắc lịch phỏng vấn (Lưu ý riêng Online & Offline).\n\n` +
         `Hãy gửi cho tôi câu hỏi hoặc chủ đề bạn đang quan tâm nhé!`;
     }
 

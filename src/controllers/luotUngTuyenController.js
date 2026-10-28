@@ -27,7 +27,12 @@ export async function nopDonUngTuyen(req, res) {
     const { tin_tuyen_dung_id, ung_vien_id, ho_so_cv_id, nguon_id, ghi_chu } = req.body;
     const user = req.user;
 
-    const targetUngVienId = ung_vien_id || (user ? user.ung_vien_id : null);
+    const store = getStore();
+    let targetUngVienId = ung_vien_id || (user ? user.ung_vien_id : null);
+    if (!targetUngVienId && user) {
+      const foundUv = store.UngVien.find(uv => (uv.tai_khoan_id === user.id || uv.email === user.email) && uv.deleted_at === null);
+      if (foundUv) targetUngVienId = foundUv.id;
+    }
 
     if (!tin_tuyen_dung_id || !targetUngVienId || !ho_so_cv_id) {
       return res.status(400).json({
@@ -35,8 +40,6 @@ export async function nopDonUngTuyen(req, res) {
         message: 'Vui lòng cung cấp đầy đủ: tin_tuyen_dung_id, ung_vien_id và ho_so_cv_id.'
       });
     }
-
-    const store = getStore();
 
     // 1. Kiểm tra tin tuyển dụng còn mở không
     const tin = store.TinTuyenDung.find(t => t.id === tin_tuyen_dung_id && t.deleted_at === null);
@@ -222,15 +225,19 @@ export async function layDanhSachUngTuyen(req, res) {
 
   let list = store.LuotUngTuyen.filter(a => a.deleted_at === null);
 
-  // 1. Phân quyền ứng viên
+  // 1. Phân quyền ứng viên & nhà tuyển dụng
   if (user && user.vai_tro === 'CANDIDATE') {
-    list = list.filter(a => a.ung_vien_id === user.ung_vien_id);
+    const targetUvId = user.ung_vien_id || (store.UngVien.find(uv => uv.tai_khoan_id === user.id)?.id);
+    list = list.filter(a => a.ung_vien_id === targetUvId);
   } else if (user && user.vai_tro === 'RECRUITER') {
-    // Phân quyền Recruiter: chỉ xem đơn của các tin mình phụ trách
-    const myTinIds = store.TinTuyenDung
-      .filter(t => t.nguoi_phu_trach_id === user.id)
-      .map(t => t.id);
-    list = list.filter(a => myTinIds.includes(a.tin_tuyen_dung_id));
+    // Chỉ lọc theo tin phụ trách nếu client chỉ định rõ ràng scope_only === 'true'
+    // Mặc định cho phép Recruiter xem đầy đủ các lượt nộp đơn của ứng viên vào các tin tuyển dụng của công ty
+    if (req.query.scope_only === 'true') {
+      const myTinIds = store.TinTuyenDung
+        .filter(t => t.nguoi_phu_trach_id === user.id)
+        .map(t => t.id);
+      list = list.filter(a => myTinIds.includes(a.tin_tuyen_dung_id));
+    }
   }
 
   // 2. Bộ lọc theo query params
